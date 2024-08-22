@@ -1,0 +1,26 @@
+javacode -> compiler(javac)->byte code(.class)->JVM 
+needs a main file
+
+int -4 bytes
+long 8bytes
+short 2 bytes
+float - 4 bytes 7 precision
+double -8 bytes
+char- 2 bytes
+1 byte -64 bits
+byte -2^7 to 2^7-1=>-128 to 127
+
+byte by = 127;
+float d = 5.8f;
+boolean b = true;
+double d = 5.8;
+long l = 58541l; l is important
+
+int num1 = 0x7E;==>126
+
+ int a = 257;//257%256
+byte k =(byte) a;
+System.out.println(k);
+
+
+
