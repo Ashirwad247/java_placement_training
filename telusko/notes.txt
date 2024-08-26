@@ -577,11 +577,40 @@ Human()- constuctor
 
 __________________________________________________________________________________________
 **anonymous object
+//stak will have object reference which is in heap
+new A();//anonmous object 
+    new A().show();
+    new A().show();
 
+__________________________________________________________________________________________
+***inheritance
+if in same directory we can access classes 
+through object so imports are required
+//write about class files here
+when main java file has been ran we can get mainJavafile.class
+if we create objects for the other classes in that file then JVM will create .class files for them
 
+extends meaning is AdvcCalc 
+we use multilevel inheritance every time
+A, B as parents C child is not possible in java but in cpp
+meaning
+class C extends B, A
+due to ambiguity problem//multiple inheritance
 
-
-
+__________________________________________________________________________________________
+**method overriding
+class A{
+    public void show(){
+        System.out.println("in A show");
+    }
+}
+class B extends A{
+     public void show(){//override this method of class
+        System.out.println("in B show");
+    }
+}
+__________________________________________________________________________________________
+***packages
 
 
 
