@@ -1,13 +1,14 @@
 javacode -> compiler(javac)->byte code(.class)->JVM 
 needs a main file
 
+
 int -4 bytes
 long 8bytes
 short 2 bytes
 float - 4 bytes 7 precision
 double -8 bytes
 char- 2 bytes
-1 byte -64 bits
+1 byte -8 bits
 byte -2^7 to 2^7-1=>-128 to 127
 
 byte by = 127;
@@ -18,9 +19,579 @@ long l = 58541l; l is important
 
 int num1 = 0x7E;==>126
 
- int a = 257;//257%256
+int a = 257;//257%256
 byte k =(byte) a;
 System.out.println(k);
+
+____________________________
+bit wise operators
+
+a = 5 0101
+b = 7 0111
+
+a | b = 7 0111
+
+a & b = 0101 5
+
+a ^ b = 2 0010
+
+~a = (2's compliment of a is -6)
+
+__________________________________
+
+hexadecimal notation 0x
+0-9 a(10)-f(15)
+0x0f = 15
+
+binary notation 0b oB 
+0b1010 =>1010 in decimal
+
+octal notaion 0
+012 => 10
+
+scientific notaion xEy
+1.5e3 = 1.5*10^3 = 1500
+
+__________________________________
+
+signed right shift >>
+Use Case: Commonly used for arithmetic shifts, especially when you want to divide a number by a power of two while preserving the sign.
+int x = -8;  // Binary: 11111111111111111111111111111000
+int result = x >> 2;  // Shifts right by 2, result: 11111111111111111111111111111110
+System.out.println(result);  // Output: -2
+
+
+unsigned right shift >>>
+Use Case: Useful when you need to perform a logical shift, treating the number as unsigned.
+int x = -8;  // Binary: 11111111111111111111111111111000
+int result = x >>> 2;  // Shifts right by 2, result: 00111111111111111111111111111110
+System.out.println(result);  // Output: 1073741822
+
+
+signed left shift <<
+
+Use Case: Commonly used to multiply a number by a power of two.
+int num = 8;  // Binary: 00000000000000000000000000001000
+int result = num << 2;  // Result: 00000000000000000000000000100000 (which is 32)
+System.out.println(result);  // Output: 32
+
+__________________________________________________________________________________________
+
+// import java.io.*;
+import java.lang.String;
+class Hello{
+    
+    public static void main(String args[]){
+       int n = 4;
+       switch(n){
+        case 1:System.out.println("Monday");
+        case 2:System.out.println("Monday");
+        case 3:System.out.println("Monday");
+        case 4:System.out.println("Four");break;
+        case 5:System.out.println("Five");
+        default:System.out.println("Five");
+       }
+       String res="";
+        res= n%2==0?"Even":"Odd";
+       System.out.println(res);
+}
+
+}
+
+_______________________________________________________________________________________________
+
+Objects have properties and behaviours
+
+Calculator calc = new Calculator();
+calc is of type Calculator new creates object of type Calculator.
+
+________________________________________________________________________________________________
+
+in Jvm you execute the code
+inside jre(java run time environment) we have JVM 
+inside jdk we have both
+
+________________________________________________________________________________________________
+
+inside JVM 
+
+we jave stack and heap memory
+classes have instance variable
+Every method has its own stack
+new Object resides in heap memory
+instance variable also reside with the object along with its method 
+
+different objects have different storage locations for their method calls and instance variables
+
+if we change instance vairable of one varialbe \\
+
+method overloading means same methods but different amount or type of paramaters
+
+__________________________________________________________________________________________
+*****************
+(int)(Math.random()*100) for converting double to int
+
+  // int nums[] = {3,7, 2, 4};
+        // int nums[] = new int[4];//all the values will be 0
+        int nums[][] = new int[3][4];
+        for(int n[]: nums){
+            for(int m:n){
+                System.out.print(m+" ");
+            }
+            System.out.println();
+        }
+
+        int nums[][] = new int[3][]// is called jagged array
+        nums[0] = new int[3];
+        nums[1] = new int[4];//mentioning the column size
+        nums[2] = new int[2];
+
+        //give me one value n from nums array
+            for(int n: nums){
+                System.out.println(n);
+            }
+
+nums.length for length of array
+
+
+class Student{
+    int rollno;
+    String name;
+    int marks;
+
+}
+
+public class Hello{
+    public static void main(String a[]){
+     Student s1 = new Student();
+     s1.rollno=12;
+     s1.name="H2ri";
+     s1.marks=32;
+     Student s2 = new Student();
+     s2.rollno=21;
+     s2.name="Krishna";
+     s2.marks=42;
+     Student s3 = new Student();
+     s3.rollno=52;
+     s3.name="Krisi";
+     s3.marks=52;
+
+      Student students[]= new Student[3];//creating array of refreneces for Student objects
+      students[0] = s1;
+      students[1] = s2;
+      students[2] = s3;
+
+      System.out.println(s1);//Student@2c7b84de
+
+       for(int i = 0;i<students.length;i++){
+        System.out.println(students[i].name+": "+students[i].marks);
+       }
+
+       for(Student stud: students){
+        System.out.println(stud.name+" : "+stud.marks);
+       }
+      
+     }
+
+}
+
+__________________________________________________________________________________________
+*****************
+String is a class
+String name = new String("navin"); pass string to String constructor
+name.charAt(0)//gives n
+name.concat("reddy")//same as +
+
+java will automatically create object for String name="Hello" syntax;
+
+in heap memory we have String constant pool
+String s1 = "Navin";
+String s2 = "Navin";
+s1 will refer to address of Navin in Scp
+got two refreneces for the same object
+
+when concat like Navin +reddy new address is allocated meaning new object 
+old Navin is eligible for garbage collection
+
+__________________________________________________________________________________________
+************
+String buffer and String builder used to make immutable String;
+
+   StringBuffer s = new StringBuffer();//returns 16bytes
+        System.out.println(s.capacity());
+
+ s.append(" Reddy");
+        
+        System.out.println(s);
+        String str = s.toString();
+        System.out.println(str);//gives Navin reddy
+
+          s.append(" Reddy");
+        s.deleteCharAt(2);
+        System.out.println(s);
+        String str = s.toString();
+        System.out.println(str);//give nain reddy
+
+        s.insert(0, "Java ");
+        System.out.println(s);
+
+        s.setLength(30);//adds extra characters " "
+        s.setLength(2); //prints  only the 2 characters of navin reddy
+        s.ensureCapacity(100);//min capacity 100
+
+StringBuffer is thread Safe but StringBuilder is not
+
+__________________________________________________________________________________________
+
+What is static?**************
+static variables should be accessed using classname
+       Mobile.name = "SmartPhone";
+
+static variable belongs to class not object like data members or instanve variables
+
+class Mobile{
+    String brand;int price;
+    static String name; // will affect all object .names
+    public void show(){
+        //inside method are called local variables
+        System.out.println(brand);
+        System.out.println(price);
+        System.out.println(name);
+    }
+}
+
+//in jvm we have class loader loads class then object are instantiated c will load only once from library
+//if we don't create the object nothing will be initialised
+
+in order to get something from static block we can do this
+
+// import java.io.*;
+import java.lang.String;
+
+class Mobile{
+    String brand;int price;
+    static String name; // will affect all object .names
+
+    static{
+        //will only once
+        name = "Phone";
+        System.out.println("Hello");
+    }
+
+    public Mobile(){
+        brand = "";
+        price = 200;
+    }
+    public void show(){
+        //inside method are called local variables
+        System.out.println(brand);
+        System.out.println(price);
+        System.out.println(name);
+    }
+}
+
+public class Hello{
+    public static void main(String a[]) throws ClassNotFoundException{
+    //    Mobile  ob1 = new Mobile();
+    //    ob1.brand = "Apple";
+    //    ob1.price = 1500;
+       
+    
+    //    ob2.show();
+    Class.forName("Mobile");
+
+    //gives Hello inside the static block
+        
+    }
+
+}
+
+__________________________________________________________________________________________
+
+static methods**************
+use ClassName.methodName to directly access the class methods
+but normal methods need to be called with objects ob.method()
+
+   public static void show1(){
+        System.out.println("in static method");
+        System.out.println(name);
+        System.out.println(price);//error
+        System.out.println(brand);//error
+    }error:non static method show() cannot be referenced from a static context
+
+
+     Mobile.show1(ob1);//give a object ref for the method to remove this error
+
+take a look at this
+// import java.io.*;
+import java.lang.String;
+
+class Mobile{
+    String brand;int price;static String name="Phone";
+    public void show(){
+        //inside method
+        System.out.println(brand);
+        System.out.println(price);
+        System.out.println(name);
+    }
+
+    public static void show1(Mobile ob){
+        System.out.println("in static method");
+        System.out.println(name);
+        System.out.println(ob.price);
+        System.out.println(ob.brand);
+    }
+}
+
+public class Hello{
+    public static void main(String a[]){
+       Mobile  ob1 = new Mobile();
+       ob1.brand = "Apple";
+       ob1.price = 1500;
+    
+       
+    
+     Mobile.show1(ob1);
+        
+    }
+
+}
+
+__________________________________________________________________________________________
+Encapsulation****
+private int age;
+Hello.java:12: error: age has private access in Human
+        obj.age = 12;
+
+public String getName(){
+        return name;
+}
+System.out.println(obj.getName());
+
+//set age
+obj.setAge(30);
+System.out.println(obj.getAge());
+
+only way to access the data members through methods is called Encapsulation
+
+__________________________________________________________________________________________
+*******Getters and Setters*********
+    public void setAge(int age){
+        this.age = age;
+    }
+
+__________________________________________________________________________________________
+*********this*******
+local variable a is passed go ivariable age
+
+    public void setAge(int a){
+        age = a;
+    }
+
+        public void setAge(int age){
+        age = age;//this should work right? but no
+        it means age local variable is assigning to itself
+    }
+
+    do this
+
+    public void setAge(int a, Human ob){
+        
+        ob.age = a;
+    }
+
+      obj.setAge(30, obj);
+        System.out.println(obj.getAge());
+
+    this refers to the current object
+    this.age = age;
+
+__________________________________________________________________________________________
+
+**constructors*****
+//String is object type so we get null before assigning
+
+ public Human(){//defualt constuctor
+        // You can write connections in constuctor
+        //always change the instacne variables with methods or constructor best practice
+        age = 13;
+        name = "Rahul";
+    }
+
+     public Human(int a, String n){//parameterized constructor
+        age = a;
+        name = n;
+    }
+__________________________________________________________________________________________
+this and super method**************
+
+// import java.io.*;
+import java.lang.String;
+
+class A{
+
+    public A(){
+        System.out.println("in A");
+    }
+
+}class B extends A{
+    public B(){
+        System.out.println("in B");
+    }
+    // public B(int n){
+    //     System.out.println("in B int");
+    // }
+}
+
+public class Hello{
+    public static void main(String a[]){
+      B b = new B();
+    }
+
+}
+//both constructors are called
+
+//for this we get in A and in B int 
+class B extends A{
+    public B(){
+        System.out.println("in B");
+    }
+    public B(int n){
+        System.out.println("in B int");
+    }
+}//for   B b = new B(5);
+
+
+//This code gives op as in A in int b
+
+class A{
+
+    public A(){
+        System.out.println("in A");
+    }
+      public A(int n){
+        System.out.println("in A int");
+    }
+
+}class B extends A{
+    public B(){
+        System.out.println("in B");
+    }
+    public B(int n){
+        System.out.println("in B int");
+    }
+}
+*Every constuctor in java has method which is invisible super() method
+like
+  public A(){
+    super();
+        System.out.println("in A");
+    }
+      public A(int n){
+        super();
+        System.out.println("in A int");
+    }
+
+*super means call the constuctor of the super class
+*//this code gives op as in A int, in B int
+// import java.io.*;
+import java.lang.String;
+
+class A{
+
+    public A(){
+        System.out.println("in A");
+    }
+      public A(int n){
+        System.out.println("in A int");
+    }
+
+}class B extends A{
+    public B(){
+        System.out.println("in B");
+    }
+    public B(int n){
+        super(n);
+        System.out.println("in B int");
+    }
+}
+
+public class Hello{
+    public static void main(String a[]){
+      B b = new B(5);
+    }
+
+}
+
+
+*//for this we get op as in int A in B 
+
+class A{
+
+    public A(){
+        System.out.println("in A");
+    }
+      public A(int n){
+        System.out.println("in A int");
+    }
+
+}class B extends A{
+    public B(){
+        super(5);
+
+        System.out.println("in B");
+    }
+    public B(int n){
+        super(n);
+        System.out.println("in B int");
+    }
+}
+
+*what is super class for the biggest parent class?
+every class extends Object class
+meaning class A extends Object 
+class B extends A multilevel inheritance
+
+
+//this gives op as in A in B in intB
+class B extends A{
+    public B(){
+      
+
+        System.out.println("in B");
+    }
+    public B(int n){
+        this();//will constructor of same class
+        System.out.println("in B int");
+    }
+}
+
+__________________________________________________________________________________________
+
+naming conventions
+class Calc
+vairable marks
+constants = PTE 
+methods - showMyMarks()
+Human()- constuctor
+
+__________________________________________________________________________________________
+**anonymous object
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
