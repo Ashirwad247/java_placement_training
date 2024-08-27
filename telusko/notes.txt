@@ -612,6 +612,134 @@ class B extends A{
 __________________________________________________________________________________________
 ***packages
 
+use this in Calc.java=>package tools;
+tools
+ |
+ |---Calc.js
+ |---Calc.class 
+
+ // import java.io.*;
+import java.lang.String;
+import tools.Calc;or tools.*;
+public class Hello{
+    public static void main(String a[]){
+       Calc c = new Calc();
+       System.out.println(c.add(1,2));
+    }
+
+}
+
+System class belongs to java.lang
+by default every java fies have java.lang.*;
+
+__________________________________________________________________________________________
+**access modifiers
+private, public, private
+if in same directory no problem for public
+in different directories mention public for class and data members
+
+private can be used in same class
+
+  B b = new B();
+b.c = 34;
+
+        Hello.java:6: error: c has private access in B
+        b.c = 34;
+         ^
+1 error
+
+default is default
+
+protected
+cannot access data members outside the package 
+but you can if you have subclass of that class 
+
+__________________________________________________________________________________________
+**polymorphism
+compiler time or early binding->overloading
+run time or late binding->overriding 
+ // Laptop obj = new Laptop();
+        // Computer obj = new Laptop();//is also correct because Laptop is technically a computer
+
+
+
+////This is called dynamic method dispatch since in runtime the jvm decides which methpd to run
+//and is only possible through inheritance
+class A{
+    public void show(){
+        System.out.println("in A show");
+    }
+}
+class B extends A{
+    public void show(){
+        System.out.println("in B show");
+    }
+}
+class C extends B{
+    public void show(){
+        System.out.println("in B show");
+    }
+}
+
+public class Hello{
+    public static void main(String a[]){
+        A obj = new A();//it should call B show right?
+        obj.show();
+        obj = new B();//new reference to B object
+        //*********so A obj = new B() is overridden to B object address instead of A******
+        obj.show();
+        obj = new C();
+        obj.show();
+
+       
+    }
+
+}
+
+
+__________________________________________________________________________________________
+**final keyword
+used with variables, method and classesa
+
+variable--
+  final int num = 8;//this becomes a constant
+        num = 9;
+        System.out.println(num);
+Hello.java:22: error: cannot assign a value to final variable num
+        num = 9;
+        ^
+1 error
+
+class--
+
+Hello.java:11: error: cannot inherit from final Calc
+class AdvCalc extends Calc
+                      ^
+1 error
+
+
+final class Calc{
+    public void show(){
+        System.out.println("in Calc show");
+    }
+    public void add(int a, int b){
+        System.out.println(a+b);
+    }
+}
+class AdvCalc extends Calc{
+    public void r(){
+        System.out.println("bla bla");
+    }
+}
+
+method--
+if we don't want anybody to overrider make the method final
+like publi final void show
+
+__________________________________________________________________________________________
+**object Class
+
+
 
 
 

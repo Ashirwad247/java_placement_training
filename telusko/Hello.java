@@ -1,19 +1,28 @@
-// import java.io.*;
-import java.lang.String;
-class A{
+
+
+final class Calc{
     public void show(){
-        System.out.println("in A show");
+        System.out.println("in Calc show");
+    }
+    public void add(int a, int b){
+        System.out.println(a+b);
     }
 }
-class B extends A{
-     public void show(){//override this method of class
-        System.out.println("in B show");
+class AdvCalc extends Calc{
+    public void r(){
+        System.out.println("bla bla");
     }
 }
 public class Hello{
     public static void main(String a[]){
-        B ob = new B();
-        ob.show();
+       Calc obj = new Calc();
+       obj.show();
+       obj.add(4, 5);
+       
     }
 
 }
+
+
+
+
