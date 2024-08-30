@@ -739,6 +739,514 @@ like publi final void show
 __________________________________________________________________________________________
 **object Class
 
+System.out.println(obj.toString());
+System.out.println(obj);//both are same
+
+
+class Laptop{
+     String model;
+     int price;
+     public String toString(){
+        return "Hey";
+     }
+}
+public class Hello{
+    public static void main(String a[]){
+      Laptop obj = new Laptop();
+      obj.model = "Lenovo Yoga";
+      obj.price = 1000;
+    
+      System.out.println(obj);//returns hey
+      System.out.println(obj.toString());//returns hey
+    }
+
+}
+
+System.out.println(obj.equals(obj2));
+ public boolean equals(Laptop that){
+        if(this.model.equals(that.model) && this.price == that.price){
+            return true;
+        }else{ return false;}
+     }
+//use vscode or ide features to genearate from source action generate hashcode and equals
+
+__________________________________________________________________________________________
+***downcaasting and upcasting
+  double d = 4.5;
+        int i =(int) d;
+        System.out.println(i);//typecasting
+
+ A obj = (A)new B();
+       obj.show1();//upcasting done automatically
+    
+   A obj = new B();//b obj refereid by a class
+       obj.show1();
+       B obj1=(B)obj;//downcast
+       obj1.show2();
+
+__________________________________________________________________________________________
+**abstract
+
+abstract class Car{
+    public  abstract void drive();//abstact method must have abstact class
+    public void playMusic(){//abstract class can have normal methods and abstact methods
+        System.out.println("play music");
+    }
+}class WagonR extends Car{
+    public void drive(){
+        System.out.println("Driving...");
+    }
+}
+public class Hello{
+    public static void main(String a[]){
+        Car ob = new WagonR();//WagonR is a concrete class
+        //Car ob = new Car(); gives error bcoz abstact class cannot have objects
+        ob.drive();
+        ob.playMusic();
+    }
+
+}
+
+//if declared in abstact class
+public  abstract void drive();
+//the child class should compulsorly define it other wise error
+child class public void drive(){
+    ...
+
+}
+
+//suppose there are many declared methods in abstact class
+//you don't want to define them in wagonR class then you can make the wagonR also an abstact class
+//then you cannot create object for wagonR so
+create another class and extend it so that you can use this concrete class's object to run your methods
+
+__________________________________________________________________________________________
+**inner class
+
+class A{
+    int age;
+    public void show(){
+        System.out.println("in A show");
+    }class B{
+        public void config(){
+            System.out.println("in config");
+        }
+    }
+}
+public class Hello{
+    public static void main(String a[]){
+      A obj = new A();
+      obj.show();
+      B obj1 = new B();
+      obj1.config();
+
+    }
+
+}
+
+obj1.config();
+          ^
+  symbol:   method config()
+  location: variable obj1 of type B
+
+//to resolve this use like this
+class A{
+    int age;
+    public void show(){
+        System.out.println("in A show");
+    }class B{
+        public void config(){
+            System.out.println("in config");
+        }
+    }
+}
+public class Hello{
+    public static void main(String a[]){
+      A obj = new A();
+      obj.show();
+      A.B obj1 = obj.new B();//you will get A$B class file//since B is a non staic class
+      obj1.config();
+
+
+
+    }
+
+}
+
+
+//if class made static then you can use this
+      A.B obj1 = new A.B();
+class A{
+    int age;
+    public void show(){
+        System.out.println("in A show");
+    }
+    static class B{
+        public void config(){
+            System.out.println("in config");
+        }
+    }
+}//static can be only used for the inner class
+
+__________________________________________________________________________________________
+**anonymous inner class
+//overrides in A show method
+public class Hello{
+    public static void main(String a[]){
+      A obj = new A(){//anonymous inner class because this resides inside Hello class
+        public void show(){
+        System.out.println("in B show");
+    }
+      };
+      obj.show();
+
+    }
+
+}
+
+__________________________________________________________________________________________
+abstract and anonymous inner class**************
+abstract class A{
+    
+    abstract public void show();
+
+}
+public class Hello{
+    public static void main(String a[]){
+     A ab = new A(){//we are creating object of anyonymous inner class
+      public void show(){
+        System.out.println("in Hello A show");
+      }
+     };
+     ab.show();
+
+    }
+
+}
+
+__________________________________________________________________________________________
+**interfaces
+
+interface A{
+  int age=22;String area="ss";  //all variables inside interface are final and static
+ void show();//by default every thing is public abstract
+  void config();
+
+}
+class B implements A{
+  //must and should define the interface methods
+  //if not this class becomes abstract class
+  public void show(){
+    System.out.println("in show");
+  }
+  public void config(){
+    System.out.println("in config");
+  }
+}
+public class Hello{
+    public static void main(String a[]){
+      A obj = new B();
+      obj.show();
+      System.out.println(obj.age);
+    }
+
+}//one class can implement multiple interfaces
+// interface Y extends x
+
+
+What is the need of interfaces
+interface computer{
+    public void code();
+}
+class Laptop implements Computer{
+    public void show(){
+        prinltn("code ");
+    }
+}
+class Desktop implements Computer{
+    public void show(){
+        prinltn("code faster");
+    }
+}
+
+class Developer {
+    public void devApp(Computer ob){
+        ob.code();
+    }
+}
+
+main{
+    Computer desk = new Desktop();
+    Developer navin  = new Developer();
+    naving.devApp(desk);
+}
+
+__________________________________________________________________________________________
+**enum//named constants
+
+
+//Status is a class
+enum Status{
+    Running, Failed, Pending, Success;//named constants
+
+}
+
+public class Hello{
+    public static void main(String a[]){
+        Status s = Status.Running;
+        System.out.println(s.ordinal());//0 
+        Status [] ss= Status.values();
+        for(Status si:ss){
+        System.out.println(si+" "+si.ordinal());
+
+        }
+
+        switch(s){
+            case Running: System.out.println("All good");
+            break;
+        }
+
+        // Status s = Status.Pending;
+        if(s==Status.Running){
+            System.out.println("all good");
+        }else if (s==Status.Failed){
+            System.out.println("Try again");
+        }else if(s==Status.Pending){
+            System.out.println("Please Wait");
+        }
+
+    }
+
+}//you cannot extend with any other class
+
+System.out.println(s.getClass().getSuperclass());
+class java.lang.Enum//enum extends Enum
+
+
+
+//Status is a class
+enum Laptop{
+    Macbook(2000), XPS(2200), Surface(1500), ThinkPad(1800), Lenovo;
+    private int price;
+    private Laptop(){
+        price = 500;//default 
+    }
+    private  Laptop(int price){
+        this.price = price;
+        System.out.println("in Laptop "+this.name());
+    }//because objects are created in the same class we need private constructors
+
+
+    public int getPrice() {
+        return price;
+    }
+
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+}
+
+public class Hello{
+    public static void main(String a[]){
+      Laptop lap = Laptop.Macbook;
+      System.out.println(lap+" "+lap.getPrice());
+
+      for(Laptop lapp:Laptop.values()){
+        System.out.println(lapp+" "+lapp.getPrice());
+      }
+
+    }
+ 
+
+}
+
+
+
+__________________________________________________________________________________________
+**annotations
+
+
+class A{
+    public void shoTheDAtaWhichBelongsToThisClass(){
+        System.out.println("in A show");
+    }
+}class B extends A{
+    @Override 
+    //@depricrated do not use this class
+    public void shoTheDAtaWhichBelongsToThisClass(){
+        System.out.println("in B show");
+    }
+}
+public class Hello{
+    public static void main(String a[]){
+        B obj = new B();
+        obj.shoTheDAtaWhichBelongsToThisClass();
+    }
+ 
+
+}
+
+__________________________________________________________________________________________
+**lambda expression
+@FunctionalInterface//single abstract methods contains
+interface A{
+    void show();
+}
+
+//behind the scene we have A obj = new A();
+but this is the code
+@FunctionalInterface
+interface A{
+    void show();
+}
+//syntactical sugar
+public class Hello{
+    public static void main(String a[]){
+       A obj = ()->{
+        {
+            System.out.println("in Hello in show");//you can also remove the braces
+        }
+       };
+       obj.show();
+    }
+ 
+
+}
+
+
+@FunctionalInterface
+interface A{
+    void show(int i);
+   // void show();//is not accepted because multiple non overriding abstract methods found in interface A error occurs
+}
+
+public class Hello{
+    public static void main(String a[]){
+       A obj = (i)->{
+        {
+            System.out.println("in Hello in show "+i);
+        }
+       };
+       //or A obj =i -> prinltn(i)
+       obj.show(5);
+    }
+ 
+
+}
+
+
+
+A obj = ( i, j)->i+j;//short hand for
+
+   A obj = new A(){
+        
+            public int add(int i, int j){
+                return i+j;
+            }
+        
+       };
+       int result = obj.add(5, 4);
+       System.out.println(result);
+    
+__________________________________________________________________________________________
+**Types of interfaces
+normal--->two or more methods
+Functional or single abstact method-->single method
+marker--> no methods//used for serialization for objects
+
+__________________________________________________________________________________________
+**Exceptions
+Types of Errors
+1.Compile time//eg:Println
+2.runtime//to open a file but the file is not there
+3.logical//2+2 but returns 5 because you need to do testing
+
+  int i = 9;
+       
+        try{
+             int j = 9/0;
+            System.out.println(j);
+        }catch(ArithmeticException e){
+            System.out.println("Cannot divide by zero");
+        }catch(ArrayIndexOutof){}
+        catch(Exception e){
+            
+        }
+
+__________________________________________________________________________________________
+Hierarchy**
+
+Object
+Throwable----------
+                   |
+                   |
+            ----------------              |----(CheckedException)SqlException--IoEXcption
+            |              |              |
+            |              |--Exception-----|-----(UncheckedException)Runtime----Arithmetic, ArrayIndex, NullPointer
+            |
+        ----------------------
+        |       |       |     |
+        |       |       |     |
+    ThreadDeath VirtualMachineE,
+                OutofMemorIOError
+
+__________________________________________________________________________________________
+**throw and throws
+
+ int i =20;
+      int j =0;
+      try{
+        j = 18/i;//throw exception
+        if(j==0) throw new ArithmeticException("I don't want to print zero");
+
+      }catch(ArithmeticException e){
+        System.out.println("blab bla bla"+e);
+      }
+
+
+class NavinException extends Exception//or RunTimeException{
+    public  NavinException(String string){
+        super(string);
+    }
+}
+
+public class Hello{
+    public static void main(String a[]){
+      int i =20;
+      int j =0;
+      try{
+        j = 18/i;//throw exception
+        if(j==0) throw new NavinException("I don't want to print zero");
+
+      }catch(NavinException e){
+        j= 18/1;
+        System.out.println("blab bla bla"+e);
+      }
+    }
+
+}
+
+**throws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
