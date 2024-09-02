@@ -1181,7 +1181,7 @@ Object
 Throwable----------
                    |
                    |
-            ----------------              |----(CheckedException)SqlException--IoEXcption
+            ----------------              |----(CheckedException)SqlException--IoEXcption,ClassNotFoundException
             |              |              |
             |              |--Exception-----|-----(UncheckedException)Runtime----Arithmetic, ArrayIndex, NullPointer
             |
@@ -1228,6 +1228,75 @@ public class Hello{
 }
 
 **throws
+
+c(){//handle exception
+    try{
+         d();
+         e();
+    }
+    catch()
+   
+}
+d() throws Exception{//ducking the exception
+
+}
+e() throws Exception{
+
+}
+
+public show() throws ClassNotFoundException{
+    Class.forName("Calc");
+}//do not use throws for main
+e.printStackTrace means show the hierarchy of calling methods
+
+__________________________________________________________________________________________
+**Input from The user
+out is created as static variable  in System class
+and println is a method of PrintStream
+out is the object for PrintStream
+
+
+import java.io.IOException;
+public class Hello{
+    public static void main(String a[])throws IOException{
+        System.out.println("Enter a nubmer");
+        int num = System.in.read();//gives ascii number
+        System.out.println(num);
+        System.out.println(num-40);
+    }
+}
+
+//for large numbers
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+public class Hello{
+    public static void main(String a[])throws IOException{
+       InputStreamReader in = new InputStreamReader(System.in);
+       BufferedReader bf = new BufferedReader(in);//needs object of inputStreamREader
+       int num =Integer.parseInt(bf.readLine());
+       System.out.println(num);
+       bf.close();
+
+    }
+}
+
+import java.util.Scanner;
+public class Hello{
+    public static void main(String a[]){
+    System.out.println("Enter a number");
+     Scanner sc = new Scanner(System.in);
+     int num=sc.nextInt();
+     System.out.println(num);
+        
+    }
+}
+
+__________________________________________________________________________________________
+**try with resources
+
+
+
 
 
 
