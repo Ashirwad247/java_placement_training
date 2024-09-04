@@ -1295,6 +1295,453 @@ public class Hello{
 __________________________________________________________________________________________
 **try with resources
 
+public class Hello{//normal
+    public static void main(String a[]){
+        int  i= 0;
+        int j = 0;
+        BufferedReader br = null;
+    try{
+        j = 18/i;
+        bf = new BufferedReader(new InputStreamReader(System.in));//needs object of inputStreamREader
+       int num =Integer.parseInt(bf.readLine());
+       System.out.println(num);
+    }catch(Exception e){
+        System.out.println("an error occured");
+    }
+    finally{
+        System.out.println("bye");
+        bf.close();
+        //close resources
+    }
+        
+    }
+}
+
+
+//try with resouces
+import java.util.Scanner;
+public class Hello{
+    public static void main(String a[]){
+     
+    try(BufferedReader bf = new BufferedReader(new InputStreamReader(System.in)); ){
+   
+       int num =Integer.parseInt(bf.readLine());
+       System.out.println(num);
+       //BufferReader has autoclosable
+    }
+        
+    }
+}
+
+__________________________________________________________________________________________
+**Threads
+
+import java.util.Scanner;
+class A extends Thread{
+    public void run(){
+        for(int i=1;i<=100;i++){
+            System.out.println("hi");
+            try{
+            Thread.sleep(10);//milliseconds
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+}
+class B extends Thread{
+    public void run(){
+        for(int i=1;i<=100;i++){
+            System.out.println("hello");
+              try{
+            Thread.sleep(10);//milliseconds
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+}
+public class Hello{
+    public static void main(String a[]){
+        A obj1 = new A();
+        B obj2 = new B();
+        System.out.println(obj1.getPriority());//gives 5 for default threads 1 is lowest and 10 is highest
+        obj2.setPriority(Thread.MAX_PRIORITY);
+        obj1.start();
+        obj2.start();
+    }
+}
+
+-----
+
+class A implements Runnable{
+    public void run(){
+        for(int i=1;i<=5;i++){
+            System.out.println("hi");
+            try{
+            Thread.sleep(10);//milliseconds
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+}
+class B implements Runnable{
+    public void run(){
+        for(int i=1;i<=5;i++){
+            System.out.println("hello");
+              try{
+            Thread.sleep(10);//milliseconds
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+}
+public class Hello{
+    public static void main(String a[]){
+        Runnable obj1 = new A();
+        Runnable obj2 = new B();
+        Thread t1 = new Thread(obj1);
+        Thread t2 = new Thread(obj2);
+
+        t1.start();
+        t2.start();
+    }
+}
+
+----
+  Runnable obj1 = new Runnable(){
+            public void run(){
+                  for(int i=1;i<=5;i++){
+            System.out.println("hello");
+              try{
+            Thread.sleep(10);//milliseconds
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+            }
+        };
+
+------
+//by using lambda expression
+
+public class Hello{
+    public static void main(String a[]){
+        Runnable obj1 = ()->{
+            
+                  for(int i=1;i<=5;i++){
+                    System.out.println("hai");
+                    try{
+                    Thread.sleep(10);//milliseconds
+
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                  }
+            
+        };
+        Runnable obj2 = ()->{
+          
+                  for(int i=1;i<=5;i++){
+            System.out.println("hello");
+              try{
+            Thread.sleep(10);//milliseconds
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+            
+        };
+        Thread t1 = new Thread(obj1);
+        Thread t2 = new Thread(obj2);
+
+        t1.start();
+        t2.start();
+    }
+}
+
+__________________________________________________________________________________________
+**race condition
+
+import java.lang.InterruptedException;
+
+class Counter{
+    int count;
+    public synchronized void increment(){
+        count++;
+    }
+}
+
+
+public class Hello{
+    public static void main(String a[])throws InterruptedException{
+        Counter c = new Counter();
+        Runnable obj1 = ()->{
+            
+                  for(int i=1;i<=1000;i++){
+                    c.increment();
+                  }
+            
+        };
+        Runnable obj2 = ()->{
+          
+                  for(int i=1;i<=1000;i++){
+                    c.increment();
+                 }
+        };
+         Thread t1 = new Thread(obj1);
+        Thread t2 = new Thread(obj2);
+
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
+        System.out.println(c.count);
+    };
+       
+}
+
+__________________________________________________________________________________________
+**Thread States 
+new, waiting, runnable, running, dead
+new->start()-runnable->run()-running->sleep(),wait()-waiting
+waiting->notify()-runnable, running->stop()-dead
+__________________________________________________________________________________________
+**Collection API
+collection api-concept
+collection - interface//also called collection framework
+collections - class
+__________________________________________________________________________________________
+**ArrayList
+// import java.lang.InterruptedException;
+
+import java.util.Collection;//interface
+import java.util.ArrayList;
+import java.util.List;
+
+public class Hello{
+    public static void main(String a[]){
+        // Collection nums = new ArrayList();//we will get object type arrays
+        List<Integer> nums = new ArrayList<Integer>();
+
+        nums.add(6);
+        nums.add(4);
+        nums.add(3);
+        nums.add(2);
+        System.out.println("The index at 2 is "+nums.get(2)); ;
+        System.out.println(nums);
+        System.out.println(nums.indexOf(6));
+        for(int n:nums){
+            System.out.println(n);
+        }
+
+        // for(Object n:nums){
+        //     int num = (Integer)n;
+        //     System.out.println(num*2);
+        // }
+    };
+       
+}
+__________________________________________________________________________________________
+**set //no sequence
+
+import java.util.Collection;//interface
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.TreeSet;
+
+public class Hello{
+    public static void main(String a[]){
+        // Collection nums = new ArrayList();//we will get object type arrays
+        // Set<Integer> nums = new HashSet<Integer>();
+        Set<Integer> nums = new TreeSet<Integer>();//for sorted nums
+
+        nums.add(6);
+        nums.add(4);
+        nums.add(3);
+        nums.add(2);
+        nums.add(2);
+
+        for(int n:nums){
+            System.out.println(n);
+        }
+
+    
+    };
+       
+}
+
+Collection extends Iterable so...
+
+   Iterator<Integer> values = nums.iterator();
+
+        while(values.hasNext()){
+            System.out.println(values.next());
+        }
+
+__________________________________________________________________________________________
+**Map
+
+// import java.lang.InterruptedException;
+//map iteself is an interface
+
+import java.util.Map;
+import java.util.HashMap;
+
+public class Hello{
+    public static void main(String a[]){
+  
+        Map<String, Integer> students = new HashMap<>();
+        Map<String, Integer> students = new HashTable<>();//almost table but synchronized
+        students.put("Navin", 57);
+        students.put("Nareshn", 59);
+        students.put("Hairesh", 70);
+        students.put("Hairesh", 92);//takes only one key
+
+        System.out.println(students);//no order
+
+        for(String key:students.keySet()){
+            System.out.println(key+" : "+students.get(key));
+        }
+    
+    };
+       
+}
+
+__________________________________________________________________________________________
+**sorting of Collections
+  List<Integer> nums = new ArrayList<>();
+        nums.add(43);
+        nums.add(31);
+        nums.add(72);
+        nums.add(29);
+        Collections.sort(nums);//it is a class
+        System.out.println(nums);
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
+
+
+public class Hello{
+    public static void main(String a[]){
+        Comparator<Integer> com  = new Comparator<Integer>(){
+            public int compare(Integer i, Integer j){
+                if(i%10>j%10) return 1;//sort 
+                return -1;//unsort
+            }
+        };//it is compulsory to mention type in right side also for anonymous class
+        List<Integer> nums = new ArrayList<>();
+        nums.add(43);
+        nums.add(31);
+        nums.add(72);
+        nums.add(29);
+        Collections.sort(nums, com);//it is a class
+        System.out.println(nums);
+    };
+       
+}
+
+////////////now try to sort the string based on the length of the string
+
+
+When you pass an object to System.out.println(), Java automatically calls the toString() method of that object to convert it to a string representation before printing it. In your case, each Student object is passed to System.out.println(s);, which triggers the toString() method you defined in the Student class.
+
+System.out.println() internally calls s.toString() to get the string representation of the Student object.
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
+
+
+class Student{
+    int age;
+    String name;
+    public Student(int age, String name){
+        this.age = age;
+        this.name = name;
+    }
+    public String toString(){
+        return "Student age="+age+", name= "+name;
+    }
+}
+
+public class Hello{
+    public static void main(String a[]){
+        Comparator<Student> com  = new Comparator<Student>(){
+            public int compare(Student i, Student j){
+                if(i.age>j.age) return 1;
+                return -1;
+            }
+        };//or Comparator<Student> com = (i, j)->i.age>j.age?1;-1;
+        List<Student> nums = new ArrayList<>();
+        nums.add(new Student(21, "Navin"));
+        nums.add(new Student(12, "John"));
+        nums.add(new Student(18, "Parul"));
+        nums.add(new Student(20, "Kiran"));
+        Collections.sort(nums, com);//it is a class
+        for (Student s: nums){
+            System.out.println(s);
+        }
+        // System.out.println(nums);
+    };
+       
+}
+
+
+/////Integer class implements Comparablbe
+//for natural sorting implement Comparable with type and define compareTo method
+
+class Student implements Comparable<Student>{
+    int age;
+    String name;
+    public Student(int age, String name){
+        this.age = age;
+        this.name = name;
+    }
+    public String toString(){
+        return "Student age="+age+", name= "+name;
+    }
+
+    public int compareTo(Student that){
+        return this.age>that.age?1:-1;
+    }
+}
+
+__________________________________________________________________________________________
+**java 1.8 Steams api
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

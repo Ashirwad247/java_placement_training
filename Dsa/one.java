@@ -1,14 +1,11 @@
 class one{
+   //factors of anumber
 
+   public static void main(String []args){
+       int n=24;
+   for(int i =1;i<=n;i++){
+    if(n%i==0) System.out.println(i);
+   }
+   }
 
-    public static void main(String args[]){
-        //for leap year or not
-        int year = 2004;
-        if((year%4==0)&& (year%400==0)||(year%100)!=0){
-            System.out.println("leap year");
-        }else{
-            System.out.println("not a leap year");
-        }
-    
-    }
 }

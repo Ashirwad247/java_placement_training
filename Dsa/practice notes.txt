@@ -41,3 +41,165 @@ class one{
 __________________________________________________________________________________________
 
 //leap year
+
+    //for leap year or not
+        int year = 2004;
+        if((year%4==0)&& (year%400==0)||(year%100)!=0){
+            System.out.println("leap year");
+        }else{
+            System.out.println("not a leap year");
+        }
+
+
+
+
+__________________________________________________________________________________________
+//reverse number
+
+class one{
+
+
+    public static void main(String args[]){
+     //reverse of a number
+     int n = 123;
+     int num=0;
+     while(n>0){
+        int rem = n%10;
+        n = n/10;
+        num = num*10+rem;
+     }
+     System.out.println(num);
+    }
+}
+
+__________________________________________________________________________________________
+**
+  //palindrome 
+     int n = 123;
+     int copy =n;
+     int num=0;
+     while(n>0){
+        int rem = n%10;
+        n = n/10;
+        num = num*10+rem;
+     }
+     if(num==copy) System.out.println("Palindrome");
+     else System.out.println("Not Palindrome");
+
+__________________________________________________________________________________________
+**armstrong
+
+     int n = 153;
+     int copy =n;
+     int num=0;
+     while(n>0){
+        int rem = n%10;
+        n = n/10;
+        num += rem*rem*rem;
+     }
+     System.out.println(num);
+
+__________________________________________________________________________________________
+**armstrong in range
+class one{
+    public  static int checkArmstrong(int n){
+     int copy =n;
+     int num=0;
+     while(n>0){
+        int rem = n%10;
+        n = n/10;
+        num += rem*rem*rem;
+     }
+     if(num==copy) return 1;
+
+        return -1;
+    }
+
+    public static void main(String args[]){
+     
+        for(int i =1;i<=500;i++){
+            if(checkArmstrong(i)==1){
+                System.out.println(i);
+            }
+        }
+    }
+}
+__________________________________________________________________________________________
+**
+class one{
+    public static void main(String args[]){
+        //fibonacci upto n series
+        int a = 0;
+        int b = 1;
+        int c;
+        int n =10;
+        System.out.print(a+" "+b+" ");
+        for(int i =2;i<=n;i++){
+            c=a+b;
+            System.out.print(c+" ");
+            a = b;
+            b = c;//return c for the nth term 
+        }
+    }
+}//Tc:O(n)
+
+__________________________________________________________________________________________
+**Nth term of fibonacci series//recursion
+class one{
+    static int fib(int n){
+        if(n<=1){
+            return n;
+        }
+        return fib(n-1)+fib(n-2);//time complexity:exponential
+    }
+    public static void main(String args[]){
+     System.out.println(fib(9));
+    }
+}
+__________________________________________________________________________________________
+**factorial
+  static int fac(int n){
+        //factorial
+        if(n==0){
+            return 1;
+        }
+        return n*fac(n-1);
+    }
+    public static void main(String args[]){
+     System.out.println(fac(5));
+    }
+__________________________________________________________________________________________
+**
+  //power of a number
+    static int po(int b, int p){
+        int res=1;
+       for(int i=1;i<=p;i++){
+        res*=b;
+       }
+       return res;
+    }
+    public static void main(String args[]){
+     System.out.println(po(2, 5));
+    }
+//using recursion
+   static int po(int b, int p){
+      //or if(p==0) return 1;
+      if(p==1) return b;
+      return b*po(b, p-1);
+    }
+__________________________________________________________________________________________
+**
+class one{
+   //factors of anumber
+
+   public static void main(String []args){
+       int n=24;
+   for(int i =1;i<=n;i++){
+    if(n%i==0) System.out.println(i);
+   }
+   }
+
+}
+
+__________________________________________________________________________________________
+**
