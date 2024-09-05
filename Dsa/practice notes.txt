@@ -203,3 +203,172 @@ class one{
 
 __________________________________________________________________________________________
 **
+
+import java.lang.Math;
+class one{
+   //prime factors of a nubmer
+
+   public static void main(String []args){
+    int n = 33;
+    while(n%2==0){
+        System.out.println(2);
+        n/=2;
+    }
+    for(int i =3;i<=Math.sqrt(n);i+=2){
+        System.out.println(i);
+        while(n%i==0){
+            System.out.println(i);
+            n/=i;
+            
+        }
+    }
+
+    if(n>2){
+        System.out.println(n);//if n is prime and greter than 2
+    }
+    
+   }
+
+}
+
+__________________________________________________________________________________________
+
+class one{
+   //strong number
+    //if summ===n strong 
+
+     static int fac(int n){
+        //factorial
+        if(n==0){
+            return 1;
+        }
+        return n*fac(n-1);
+    }
+   public static void main(String []args){
+    int n =145;
+    int sum =0;
+    while(n!=0){
+        int rem = n%10;
+        sum+=fac(rem);
+        n/=10;
+    }
+    System.out.println(sum);
+    
+   }
+
+}
+__________________________________________________________________________________________
+
+class one{
+  //perfect square
+   public static void main(String []args){
+    for(int i=1;i<=10;i++){
+        System.out.print(i*i+" ");
+    }
+    
+   }
+
+}
+_____________________________________________________________________________________________
+
+class one{
+  //perfect square
+
+  public static boolean isPerfectSquare(long x)
+    {
+        // Find floating point value of
+        // square root of x.
+        if (x >= 0) {
+            long sr = (long)Math.sqrt(x);
+
+            // if product of square root
+            // is equal, then
+            // return T/F
+            return (sr * sr == x);
+        }
+        // else return false if n<0
+        return false;
+    }
+
+    public static boolean isPerfectSquare(long n) {
+        // Base case: 0 and 1 are perfect squares
+        if (n <= 1) {
+            return true;
+        }
+
+        // Initialize boundaries for binary search
+        long left = 1, right = n;
+
+        while (left <= right) {
+            // Calculate middle value
+            long mid = left + (right - left) / 2;
+
+            // Calculate square of the middle value
+            long square = mid * mid;
+
+            // If the square matches n, n is a perfect square
+            if (square == n) {
+                return true;
+            }
+            // If the square is smaller than n, search the right
+            // half
+            else if (square < n) {
+                left = mid + 1;
+            }
+            // If the square is larger than n, search the left
+            // half
+            else {
+                right = mid - 1;
+            }
+        }
+
+        // If the loop completes without finding a perfect
+        // square, n is not a perfect square
+        return false;
+    }
+
+   public static void main(String []args){
+    for(int i=1;i<=10;i++){
+        System.out.print(i*i+" ");
+    }
+    
+   }
+
+}
+
+
+__________________________________________________________________________________________
+
+class one{
+  //automorphic nubmer
+  //works for up to only two digit numbers n
+   public static void main(String []args){
+    int n = 36;
+    int sq = n*n;
+    int accum=0;
+    int count =0;
+    while(sq!=0){
+        if(count==1){
+        int rem =sq%10;
+        sq/=10; 
+        accum=(rem*10)+accum;
+        System.out.println(accum);
+        if(accum==n) break;
+        }else{
+        int rem =sq%10;
+        sq/=10; 
+        accum=rem;
+        if(accum==n) break;
+
+        count++;
+        }
+      
+    
+    }
+    if(accum==n)System.out.println("Automorphic number");
+    
+   }
+
+}
+
+
