@@ -197,10 +197,11 @@ public class Hello{
 
 __________________________________________________________________________________________
 *****************
+//Yes, strings are immutable in Java.
 String is a class
 String name = new String("navin"); pass string to String constructor
 name.charAt(0)//gives n
-name.concat("reddy")//same as +
+  System.out.println(name.concat(" Arun"));
 
 java will automatically create object for String name="Hello" syntax;
 
@@ -216,6 +217,14 @@ old Navin is eligible for garbage collection
 __________________________________________________________________________________________
 ************
 String buffer and String builder used to make immutable String;
+Stores and manipulates sequences: A StringBuffer is a mutable class that can store and manipulate sequences of characters. 
+ 
+Thread-safe: A StringBuffer is thread-safe and synchronized. 
+ 
+Faster than String: A StringBuffer is faster than the String class. 
+ 
+Efficient: A StringBuffer is efficient because it doesn't require creating a new sequence in memory to update it. 
+ 
 
    StringBuffer s = new StringBuffer();//returns 16bytes
         System.out.println(s.capacity());
@@ -239,11 +248,27 @@ String buffer and String builder used to make immutable String;
         s.setLength(2); //prints  only the 2 characters of navin reddy
         s.ensureCapacity(100);//min capacity 100
 
-StringBuffer is thread Safe but StringBuilder is not
+StringBuffer is thread Safe but StringBuilder  is faster but  not thread safe
+
+sb has replace ,delete,  substring and indexOf, LastIndexOf and reverse methods and also length() method
+
+java.lang.Object
+ ↳ java.lang
+    ↳ Class StringBuilder
+it was added in jdk1.5
+
 
 __________________________________________________________________________________________
 
 What is static?**************
+Shared among all instances:
+All instances of the class share the same copy of the static variable. If one instance modifies the variable, the change is visible to all other instances. 
+ 
+Accessed using the class name:
+Static variables can be accessed using the class name, without creating an object of the class. For example, MyClass.count.
+Memory efficiency:
+Static variables are stored in the class's memory area, not in the memory area of individual objects. This can be more efficient, especially if you have a large number of objects.
+
 static variables should be accessed using classname
        Mobile.name = "SmartPhone";
 
@@ -299,7 +324,7 @@ public class Hello{
     
     //    ob2.show();
     Class.forName("Mobile");
-
+    //meaning this will execute the static block
     //gives Hello inside the static block
         
     }
@@ -337,9 +362,10 @@ class Mobile{
 
     public static void show1(Mobile ob){
         System.out.println("in static method");
-        System.out.println(name);
-        System.out.println(ob.price);
-        System.out.println(ob.brand);
+        System.out.println(name);//Phone
+        System.out.println(ob.name);//Phone
+        System.out.println(ob.price);//1500
+        System.out.println(ob.brand);//"Apple"
     }
 }
 
@@ -409,6 +435,8 @@ local variable a is passed go ivariable age
 __________________________________________________________________________________________
 
 **constructors*****
+Constructors can be used to perform any necessary setup tasks when an object is created.
+This might include opening files, connecting to databases, or allocating resources.
 //String is object type so we get null before assigning
 
  public Human(){//defualt constuctor
@@ -1785,7 +1813,10 @@ public class Hello{
         }
      
     }
-       
+__________________________________________________________________________________________
+**immutable classes whose objects are immutable
+String, Byte, Character, Float Double , Long..wrapper classes, 
+Class, BigInteger, BigDecimcal
 
 
 

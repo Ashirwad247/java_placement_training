@@ -371,4 +371,253 @@ class one{
 
 }
 
+__________________________________________________________________________________________
 
+class one{
+  //harshad number or niven number
+   public static void main(String []args){
+    int n = 13;
+    int sum =0;
+    int copy = n;
+    while(n>0){
+      int rem=n%10;
+      n/=10;
+      sum+=rem;
+      System.out.println(sum);
+    }
+    if(copy%sum==0) System.out.println("yes");
+
+   }
+
+}
+
+__________________________________________________________________________________________
+**
+
+class one{
+  //abundant num sum(n)-n>n
+   public static void main(String []args){
+   int n = 12;
+   int sum=0;
+   for(int i =1;i<=n;i++){
+    if(n%i==0){
+      sum+=i;
+    }
+   }
+   if(sum-n>n)System.out.println("abundant");
+
+   }
+
+   //or
+     int sum = 0;
+   
+      //  // Note that this loop runs till square 
+      //  // root of n
+      //   for (int i=1; i<=(Math.sqrt(n)); i++)
+      //   {
+      //       if (n%i==0)
+      //       {
+      //        // If divisors are equal,take only 
+      //        // one of them
+      //           if (n/i == i)
+      //              sum = sum + i;
+   
+      //           else // Otherwise take both
+      //           {
+      //              sum = sum + i;
+      //              sum = sum + (n / i);
+      //           }
+      //       }
+      //   }
+   
+      //   // calculate sum of all proper divisors 
+      //  // only
+      //   sum = sum - n;
+      //   return sum;
+
+}
+__________________________________________________________________________________________
+**
+
+class one{
+  //friendly pair
+  public static int summer(int n){
+   int sum=0;
+   for(int i =1;i<=n;i++){
+    if(n%i==0){
+      sum+=i;
+    }
+   }
+   return sum;
+  }
+   public static void main(String []args){
+      int n1=6;
+      int n2=28;
+      int n1Sum=summer(n1);
+      int n2Sum=summer(n2);
+      System.out.println(n1Sum+" "+n2Sum);
+      if(n1Sum/n1==n2Sum/n2)System.out.println("Yes");
+
+   }
+
+   
+
+}
+__________________________________________________________________________________________
+**Highest common factor
+
+class one{
+ //hcf
+   public static void main(String []args){
+    int n1 = 36, n2 = 60, hcf =0;
+    for(int i=1;i<=n1||i<=n2;i++){
+      if(n1%i==0&& n2%i==0) hcf=i;
+    }
+    System.out.println(hcf);
+   }
+
+   
+
+}
+__________________________________________________________________________________________
+**lcm
+class one{
+ //lcm
+   public static void main(String []args){
+    int n1 = 36, n2 = 60, lcm=0;
+    int max =(n1>n2)?n1:n2;
+    for(int i =max;i<=n1*n2;i++){
+      if(i%n1==0 && i%n2==0){
+        lcm = i;
+        break;
+      }
+    }
+    System.out.println(lcm);
+   }
+
+   
+
+}
+
+__________________________________________________________________________________________
+**largest in the array recursion
+
+class one{
+ //largest in arry
+ public static int largest(int a[], int i, int max){
+  if(i==a.length) return max;
+  if(a[i]>max) max=a[i];
+  return largest(a, i+1, max);
+ }
+   public static void main(String []args){
+    int arr[] = {2,1, 3, 4, 5, 7};
+    
+    int maxi =largest(arr, 0, arr[0]);
+    System.out.println(maxi);
+   }
+
+
+   
+
+}
+__________________________________________________________________________________________
+**check letter is alphabet or not
+
+ public static void main(String[] args)
+    {										
+        char ch;
+                              
+        ch = '9';
+		
+	//condition for checking characters
+        if((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
+	      System.out.println("The inserted character " + ch + " is an Alphabet");
+	else
+	      System.out.println("The inserted character " + ch + " is not an Alphabet");
+		
+		
+    
+    	//condition for checking characters
+        if((ch >= 97 && ch <= 122) || (ch >= 65 && ch <= 90))
+	      System.out.println("The inserted character " + ch + " is an Alphabet");
+	else
+	      System.out.println("The inserted character " + ch + " is not an Alphabet");
+		
+
+    
+    } //end of the main method
+
+__________________________________________________________________________________________
+//ascci of character
+char c= 'a';
+int i = c;
+print(i);//65
+__________________________________________________________________________________________
+//length of characer
+   public static void main(String []args){
+   int length=0;
+		
+                String s = "prepinsta";
+                for (char c1 : s.toCharArray()) 
+			length++;
+		System.out.println("Length of String is : "+length);
+   }
+
+__________________________________________________________________________________________
+**Palindrome String
+import java.io.*;
+class one{
+
+   public static void main(String []args)throws IOException{
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String str = br.readLine();
+    String temp = str;
+    StringBuffer sb = new StringBuffer(str);
+    sb.reverse();
+    str = sb.toString();
+    if(temp.equalsIgnoreCase(str)) System.out.println(temp+" is Palindrome");
+   }
+
+
+   
+
+}
+__________________________________________________________________________________________
+**sort of array
+import java.util.*;
+class HelloWorld {
+public static void main(String[] args) {
+int a[]={5,9,3,8,4};
+int n=a.length;
+Arrays.sort(a);
+for(int i=0;i<n;i++){
+System.out.println(a[i]);
+}
+}
+}
+Time Complexity: O(nlogn)
+__________________________________________________________________________________________
+**reverse elements in array
+import java.io.*;
+class one{
+
+   public static void main(String []args)throws IOException{
+    int arr[] = {1,2,3 ,4, 5};
+    int i = 0;
+    int j = arr.length-1;
+    while(i!=j){
+      int temp = arr[i];
+      arr[i] = arr[j];
+     arr[j]=temp;
+      i++;
+      j--;
+    }
+    for(int n:arr){
+      System.out.print(n+" ");
+    }
+   }
+
+
+   
+
+}
