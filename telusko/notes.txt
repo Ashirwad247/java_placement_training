@@ -432,6 +432,10 @@ local variable a is passed go ivariable age
     this refers to the current object
     this.age = age;
 
+
+__________________________________________________________________________________________
+In Java, a private variable is a variable that can only be accessed within the class it is declared in. This means that other classes, even subclasses, cannot directly access the variable. 
+***
 __________________________________________________________________________________________
 
 **constructors*****
@@ -1334,7 +1338,7 @@ public class Hello{//normal
        int num =Integer.parseInt(bf.readLine());
        System.out.println(num);
     }catch(Exception e){
-        System.out.println("an error occured");
+        System.out.println("an error ockred");
     }
     finally{
         System.out.println("bye");
@@ -1345,6 +1349,7 @@ public class Hello{//normal
     }
 }
 
+instead...
 
 //try with resouces
 import java.util.Scanner;
@@ -1361,6 +1366,45 @@ public class Hello{
     }
 }
 
+
+__________________________________________________________________________________________
+**Custom exception
+
+import java.io.*;
+import java.util.*;
+//user defined exceptiption
+
+
+class P extends Exception{
+
+     private static int bal[] = {1001, 1002, 1300, 999, 1500};//will not print 999 and 1500
+   P(){
+
+   }
+    P(String str){
+      super(str);
+    }
+    
+
+  
+      //line 431
+   
+    public static void main(String []args) {
+      
+      for(int i =0;i<5;i++){
+        try{
+        P pp = new P("Amoutn balance is less");
+        if(bal[i]<1000) throw pp;
+
+        System.out.println(bal[i]);
+
+        }catch(P pp){
+          pp.printStackTrace();
+        }
+      }
+     }
+    
+}
 __________________________________________________________________________________________
 **Threads
 
