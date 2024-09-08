@@ -1,0 +1,129 @@
+class A implements Runnable{
+    public void run(){
+        for(int i=1;i<=100;i++){
+            System.out.println("hi");
+            try{
+            Thread.sleep(10);//milliseconds
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+}
+class B implements Runnable{
+    public void run(){
+        for(int i=1;i<=100;i++){
+            System.out.println("hello");
+              try{
+            Thread.sleep(10);//milliseconds
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+}
+public class P{
+    public static void main(String args[]){
+        Runnable obj1 = new Runnable(){
+            public void run(){
+                  for(int i=1;i<=100;i++){
+                System.out.println("hi");
+                try{
+                Thread.sleep(10);//milliseconds
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+              }
+            }
+               
+        };
+        Runnable obj2 = ()->{
+               for(int i=1;i<=100;i++){
+                System.out.println("hello");
+                try{
+                Thread.sleep(10);//milliseconds
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+              }
+            
+        };
+        // System.out.println(obj1.getPriority());
+       
+        Thread t1 = new Thread(obj1);
+        Thread t2 = new Thread(obj2);
+        t1.start();
+        t2.start();
+    }
+}
+
+**Thread States 
+new, waiting, runnable, running, dead
+new->start()-runnable->run()-running->sleep(),wait()-waiting
+waiting->notify()-runnable, running->stop()-dead
+
+
+
+import java.util.*;
+import java.io.*;
+public class P{
+    public static void main(String args[]){
+        Thread t =  Thread.currentThread();
+        System.out.println("current thread "+t);/[main, 5 main]
+        System.out.println("name "+t.getName());//main
+    }
+     
+    
+}
+
+
+
+//synchronized
+import java.util.*;
+import java.io.*;
+
+class Reserve implements Runnable{
+    int avail = 1;
+    int wanted;
+    Reserve(int i){
+        wanted =i;
+    }
+    public void run(){
+        synchronized(this){
+            System.out.println(avail);
+            if(avail>=wanted){
+                String name = Thread.currentThread().getName();
+                System.out.println(wanted+" Berths reseved for "+name);
+                try{
+                    Thread.sleep(1500);
+                    avail = avail-wanted;
+
+                }catch(Exception e){
+
+                }
+            }
+            else{
+                System.out.println("Sorry no berth");
+            }
+        }
+    }
+}
+public class P{
+    public static void main(String args[]){
+       Reserve r = new Reserve(1);
+       Thread t1 = new Thread(r);
+       Thread t2 = new Thread(r);
+       t1.setName("First peson ");
+       t2.setName("Second peson ");
+       t1.start();
+       t2.start();
+    }
+     
+    
+}
+
+

@@ -789,5 +789,112 @@ class one{
 
 }
 __________________________________________________________________________________________
+**Hexadecimal to Decimal 
+import java.io.*;
+import java.util.*;
+class one{
+  static int convert(String hex){
+   String digits = "0123456789ABCDEF";  
+             hex = hex.toUpperCase();  
+             int val = 0;  
+             for (int i = 0; i < hex.length(); i++)  
+             {  
+                 char c = hex.charAt(i);  
+                 int d = digits.indexOf(c);  
+                 val = 16*val + d;  
+             }  
+             return val;  
+  }
+    
+  public static void main(String args[]){
+    String hex = "C9";
+    System.out.println(convert(hex));
+  }
+
+
+   
+
+
+   
+
+}
+
+
+
+__________________________________________________________________________________________
+**Decimal to Binary
+import java.io.*;
+import java.util.*;
+class one{
+  
+  public static void main(String args[]){
+    int decimal = 12;
+		//integer array for storing binary digits 
+		int binary[] = new int[20];
+		int i = 0; 
+		//writing logic for the conversion 
+		while(decimal > 0)
+		{       
+			int r = decimal % 2;
+			binary[i++] = r;
+			decimal = decimal/2;
+		}
+		//printing result
+		System.out.print("Binary number : ");
+		for(int j = i-1 ; j >= 0 ; j--)
+		System.out.print(binary[j]+"");
+  }
+
+
+   
+
+
+   
+
+}
+
+__________________________________________________________________________________________
+**sort the first half in ascending and second half in descending 
+import java.io.*;
+import java.util.*;
+class one{
+  static void printOrder(int []a, int n){
+    int temp;
+    for(int i =0;i<n-1;i++){
+      for(int j =0;j<n/2;j++ ){
+        if(a[j]>a[j+1]){
+          temp = a[j];
+          a[j] = a[j+1];
+          a[j+1] = temp;
+        }
+      }
+      for(int j  =n/2;j<n-1;j++){
+        if(a[j]<a[j+1]){
+          temp = a[j];
+          a[j] = a[j+1];
+          a[j+1] = temp;
+        }
+      }
+
+    }
+
+    for(int s:a){
+      System.out.println(s);
+    }
+  }
+  
+  public static void main(String args[]){
+   int arr[] = {3, 2, 4, 1, 10, 30, 40, 20};
+   int n = arr.length;
+   printOrder(arr, n);
+  }
+
+
+   
+
+
+   
+
+}
 
 
