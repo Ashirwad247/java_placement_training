@@ -1,41 +1,26 @@
-import java.io.*;
-import java.util.*;
-class one{
-  static void printOrder(int []a, int n){
-    int temp;
-    for(int i =0;i<2;i++){
-      for(int j =0;j<n/2;j++ ){
-        if(a[j]>a[j+1]){
-          temp = a[j];
-          a[j] = a[j+1];
-          a[j+1] = temp;
-        }
-      }
-      for(int j  =n/2;j<n-1;j++){
-        if(a[j]<a[j+1]){
-          temp = a[j];
-          a[j] = a[j+1];
-          a[j+1] = temp;
-        }
-      }
+import java.lang.*;
+import java.util.Arrays;
 
+class one
+{
+    public static void main (String[] args) {
+        int[] arr = {5, 8, 5, 7, 8, 10};
+        int size = arr.length;
+        countFrequency(arr, size);
     }
 
-    for(int s:a){
-      System.out.println(s);
+    static void countFrequency(int[] arr, int n)
+    {
+
+        Arrays.sort(arr);
+
+        for(int i =0 ;i<n;i++){
+          int count = 1;
+          while(i<n-1 && arr[i]==arr[i+1]){
+            i++;count++;
+          }
+          // System.out.println(i);
+          System.out.println(arr[i]+" "+count);
+        }
     }
-  }
-  
-  public static void main(String args[]){
-   int arr[] = {3, 2, 4, 1, 5};
-   int n = arr.length;
-   printOrder(arr, n);
-  }
-
-
-   
-
-
-   
-
 }

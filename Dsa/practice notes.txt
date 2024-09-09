@@ -896,5 +896,73 @@ class one{
    
 
 }
+__________________________________________________________________________________________
+**Print all permutatipons of a string recursions
+
+__________________________________________________________________________________________
+**Frequency of array
+import java.util.Arrays;
+class Main
+{
+public static void countFreq(int arr[], int n)
+{
+boolean visited[] = new boolean[n];
+Arrays.fill(visited, false);
+
+// Traverse through array elements and
+// count frequencies
+for (int i = 0; i < n; i++) {
+
+// Skip this element if already processed
+if (visited[i] == true)
+continue;
+
+// Count frequency
+int count = 1;
+for (int j = i + 1; j < n; j++) {
+if (arr[i] == arr[j]) {
+visited[j] = true;
+count++;
+}
+}
+System.out.println(arr[i] + " occurs " + count +" times ");
+}
+}
+
+// Driver code
+public static void main(String []args)
+{
+int arr[] = new int[]{10, 30, 10, 20, 10, 20, 30, 10};
+int n = arr.length;
+countFreq(arr, n);
+}
+}
+
+import java.lang.*;
+import java.util.Arrays;
+
+class one
+{
+    public static void main (String[] args) {
+        int[] arr = {5, 8, 5, 7, 8, 10};
+        int size = arr.length;
+        countFrequency(arr, size);
+    }
+
+    static void countFrequency(int[] arr, int n)
+    {
+
+        Arrays.sort(arr);
+
+        for(int i =0 ;i<n;i++){
+          int count = 1;
+          while(i<n-1 && arr[i]==arr[i+1]){
+            i++;count++;
+          }
+          // System.out.println(i);
+          System.out.println(arr[i]+" "+count);
+        }
+    }
+}
 
 

@@ -126,4 +126,82 @@ public class P{
     
 }
 
+1. Deadlock:
+
+A deadlock occurs when two or more threads are blocked forever, each waiting on the other to release a lock. Here’s an example:
+class Resource1 {
+    public synchronized void method1(Resource2 r2) {
+        System.out.println("Resource1: Holding lock on Resource1");
+        try { Thread.sleep(100); } catch (InterruptedException e) {}
+        System.out.println("Resource1: Waiting for Resource2");
+        r2.last();
+    }
+
+    public synchronized void last() {
+        System.out.println("Resource1: Inside last");
+    }
+}
+
+class Resource2 {
+    public synchronized void method2(Resource1 r1) {
+        System.out.println("Resource2: Holding lock on Resource2");
+        try { Thread.sleep(100); } catch (InterruptedException e) {}
+        System.out.println("Resource2: Waiting for Resource1");
+        r1.last();
+    }
+
+    public synchronized void last() {
+        System.out.println("Resource2: Inside last");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        final Resource1 r1 = new Resource1();
+        final Resource2 r2 = new Resource2();
+
+        new Thread(() -> r1.method1(r2)).start();
+        new Thread(() -> r2.method2(r1)).start();
+    }
+}
+
+2. Starvation:
+
+Starvation occurs when a thread is perpetually denied access to resources because other threads are continuously acquiring those resources. This can happen if thread priorities are not managed properly or if a thread is always outperformed by others.
+
+3. Thread Safety:
+
+Thread safety means ensuring that shared data structures are accessed and modified in a way that is safe from concurrent access. This is generally achieved through synchronization mechanisms, such as locks, or by using thread-safe data structures from the java.util.concurrent package.
+
+Example of Using ConcurrentHashMap for Thread Safety:
+
+import java.util.concurrent.ConcurrentHashMap;
+
+public class Main {
+    private static final ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+
+    public static void main(String[] args) {
+        Runnable task = () -> {
+            for (int i = 0; i < 1000; i++) {
+                map.put("key", map.getOrDefault("key", 0) + 1);
+            }
+        };
+
+        Thread t1 = new Thread(task);
+        Thread t2 = new Thread(task);
+
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Map size: " + map.get("key"));
+    }
+}
+
 
