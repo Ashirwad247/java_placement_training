@@ -1,26 +1,25 @@
 import java.lang.*;
 import java.util.Arrays;
 
-class one
+class one//using recursion
 {
-    public static void main (String[] args) {
-        int[] arr = {5, 8, 5, 7, 8, 10};
-        int size = arr.length;
-        countFrequency(arr, size);
+  //F(N)=(1)+(2*3)+(4*5*6)+...N.
+//F(4)=5167
+   
+
+    public static void main(String []args){
+      int n = 3;
+      System.out.println(term(1, 1, 3));
+
     }
 
-    static void countFrequency(int[] arr, int n)
-    {
-
-        Arrays.sort(arr);
-
-        for(int i =0 ;i<n;i++){
-          int count = 1;
-          while(i<n-1 && arr[i]==arr[i+1]){
-            i++;count++;
-          }
-          // System.out.println(i);
-          System.out.println(arr[i]+" "+count);
-        }
+    public static int term(int calculated, int current, int N){
+      if(current==N+1) return 0;
+      int i, cur=1;
+      for( i =calculated;i<calculated+current;i++){
+        cur*=i;
+      }
+      return cur+term(i, current+1, N);
     }
+     
 }

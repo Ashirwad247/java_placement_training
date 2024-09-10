@@ -204,4 +204,152 @@ public class Main {
     }
 }
 
+_________________________________________
+Lambda expressions
+### Lambda Expressions in Java
+
+**Lambda expressions** in Java were introduced in **Java 8** as part of the functional programming features. They allow you to write more concise and readable code, especially when working with collections, streams, and functional interfaces.
+
+#### 1. **What is a Lambda Expression?**
+A lambda expression is essentially an anonymous function (a function without a name) that can be passed around as a parameter or used where a functional interface is expected.
+
+**Syntax**:
+```java
+(parameters) -> expression
+(parameters) -> { statements }
+```
+
+#### Example:
+```java
+// A simple lambda expression that takes two integers and returns their sum
+(int a, int b) -> a + b
+```
+
+#### 2. **Functional Interfaces**
+A functional interface is an interface that has exactly **one abstract method**. It can have multiple default or static methods, but only one abstract method. Lambda expressions work with these interfaces, and Java 8 provides several built-in functional interfaces like `Predicate`, `Consumer`, `Function`, and more.
+
+Some important functional interfaces are:
+
+- **Predicate<T>**: Accepts an input and returns a boolean.
+    ```java
+    Predicate<String> isEmpty = s -> s.isEmpty();
+    ```
+
+- **Consumer<T>**: Accepts an input and performs an action, without returning anything.
+    ```java
+    Consumer<String> print = s -> System.out.println(s);
+    ```
+
+- **Function<T, R>**: Accepts one argument and produces a result.
+    ```java
+    Function<Integer, Integer> square = x -> x * x;
+    ```
+
+#### Example of Using Functional Interfaces:
+```java
+import java.util.function.Predicate;
+import java.util.function.Consumer;
+
+public class LambdaExample {
+    public static void main(String[] args) {
+        Predicate<String> isShort = s -> s.length() < 5;
+        System.out.println(isShort.test("hello")); // Output: false
+
+        Consumer<String> print = s -> System.out.println(s);
+        print.accept("Hello, Lambda!"); // Output: Hello, Lambda!
+    }
+}
+```
+
+### 3. **Using Lambda Expressions in Collection Operations**
+
+Lambda expressions are most commonly used with Java collections and streams. Here are a few ways to use them:
+
+- **forEach()**: Allows you to iterate through a collection.
+- **filter()**: Filters a stream based on a predicate.
+- **map()**: Transforms each element in a collection.
+- **reduce()**: Reduces the elements of a collection into a single value.
+
+#### Example with Collections:
+```java
+import java.util.Arrays;
+import java.util.List;
+
+public class CollectionOperations {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("John", "Jane", "Jack", "Doe");
+
+        // Using forEach with a lambda to print each element
+        names.forEach(name -> System.out.println(name));
+
+        // Using filter with a lambda to find names with length greater than 3
+        names.stream()
+            .filter(name -> name.length() > 3)
+            .forEach(name -> System.out.println("Filtered name: " + name));
+
+        // Using map with a lambda to transform names to uppercase
+        names.stream()
+            .map(name -> name.toUpperCase())
+            .forEach(name -> System.out.println("Uppercase name: " + name));
+    }
+}
+```
+
+**Explanation**:
+- `forEach()` takes a lambda and applies it to each element in the list.
+- `filter()` uses a `Predicate` to include only names with a length greater than 3.
+- `map()` applies a transformation (converting names to uppercase) using the lambda expression.
+
+### 4. **Goal: Get Comfortable with Functional Programming**
+
+Functional programming encourages writing code that is concise, expressive, and avoids side effects. Lambdas and functional interfaces are central to this style of programming in Java, especially when working with streams.
+
+### Key Points:
+- **Lambda expressions** simplify code by removing boilerplate, especially when working with anonymous classes.
+- **Functional interfaces** like `Predicate` and `Consumer` allow you to pass behavior (as lambdas) to methods.
+- **Stream API** works seamlessly with lambda expressions, providing methods like `filter()`, `map()`, and `reduce()` for processing data in a functional way.
+
+### Practice:
+1. Use `forEach()`, `filter()`, and `map()` on collections.
+2. Write custom `Predicate`, `Consumer`, or `Function` interfaces for specific use cases.
+3. Combine multiple lambda expressions in stream operations to create more complex functionality.
+
+By practicing with these features, you'll become comfortable using lambdas and adopting functional programming in Java.
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Arrays;
+import java.util.stream.Stream;//is an interface
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.Function;
+
+class P{
+    public static void main(String []args){
+        List<Integer> nums = Arrays.asList(4, 5, 7, 2);
+        
+       Predicate<Integer> p = new Predicate<Integer>(){
+         public boolean test(Integer n){
+            return n%2==0;
+         }
+       };
+       Function<Integer, Integer> f = new Function<Integer, Integer>(){
+        public Integer apply(Integer n){
+            return n*2;
+        }
+      
+       };
+         Stream<Integer> s1 = nums.stream();
+        Stream<Integer> s2 = s1.filter(p);
+        Stream<Integer> s3 = s2.map(f);
+        int result = s3.reduce(0, (c,e)->c+e);
+        System.out.println(result);
+
+
+
+    }
+}
+
 

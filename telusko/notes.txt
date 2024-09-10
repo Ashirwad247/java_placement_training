@@ -1845,8 +1845,11 @@ public class Hello{
         //    s1.forEach(n->System.out.println(n));//gives error
 
         Predicate<Integer> p = new Predicate<Integer>(){
-            if(n%2==0) return true;
+            public boolean test(Integer n){
+                 if(n%2==0) return true;
             return false;//or return n%2==0
+            }
+           
         }//filter needs object of predicate like filter(p)
         Function<Integer, Integer> f = new Function<Integer,Integer>(){
             public Integer apply(Integer n) {
