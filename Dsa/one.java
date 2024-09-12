@@ -1,39 +1,31 @@
 import java.util.*;
 
 public class one {
-    public List<List<String>> groupAnagrams(String[] strs) {
-        Map<String, List<String>> res = new HashMap<>();
-
-        for (String s : strs) {
-            int[] count = new int[26];  // Array to store the count of each character
-
-            // Count the frequency of each character in the string
-            for (char c : s.toCharArray()) {
-                count[c - 'a']++;
-            }
-
-            // Convert the count array to a string key (or use Arrays.toString())
-            StringBuilder sb = new StringBuilder();
-            for (int i : count) {
-                // sb.append('#');  // Any delimiter to separate the counts
-                sb.append(i);
-            }
-            String key = sb.toString();
-            System.out.println(key);
-
-            // Group the strings with the same character counts
-            if (!res.containsKey(key)) {
-                res.put(key, new ArrayList<>());
-            }
-            res.get(key).add(s);
-        }
-
-        return new ArrayList<>(res.values());
-    }
+    //search of an element in 2d matrix using dfs on a sorted matrix
+    
 
     public static void main(String[] args) {
-        one ga = new one();
-        String[] strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
-        System.out.println(ga.groupAnagrams(strs));
+
+         int a[][] =  {{4,5,2,7}, {0,1,12,3},{8,9,10,6}};
+        
+        int x = 6;
+        int flag=0;
+
+        int i=0, j=3;
+  
+        while(i<3 && j>=0){
+          if(a[i][j]==x){
+            System.out.println("Element found at ("+i+","+j+")");
+            flag =1;
+            break;
+          }
+          else if(a[i][j]>x){
+            j--;
+          }else{
+            i++;
+          }
+        }
+        if(flag==0)
+            System.out.println("Not found");
     }
 }
