@@ -1864,6 +1864,87 @@ ________________________________________________________________________________
 **immutable classes whose objects are immutable
 String, Byte, Character, Float Double , Long..wrapper classes, 
 Class, BigInteger, BigDecimcal
+__________________________________________________________________________________________
+`Optional` in Java 8 is a container class that represents a value that can either be present or absent. It helps deal with the common problem of `NullPointerException`, making the code more robust and readable when handling potentially null values.
+
+### Key Concepts of `Optional`:
+
+1. **Creation of Optional:**
+   - **`Optional.of(T value)`**: Creates an `Optional` containing a non-null value.
+   - **`Optional.ofNullable(T value)`**: Creates an `Optional` that can hold a value or be empty if `null`.
+   - **`Optional.empty()`**: Creates an empty `Optional` that contains no value.
+
+   ```java
+   Optional<String> nonEmptyOptional = Optional.of("Hello");  // non-null value
+   Optional<String> nullableOptional = Optional.ofNullable(null);  // null value
+   Optional<String> emptyOptional = Optional.empty();  // no value
+   ```
+
+2. **Checking if a Value is Present:**
+   - **`isPresent()`**: Returns `true` if the value is present, otherwise `false`.
+   - **`ifPresent(Consumer<T> action)`**: If a value is present, it performs the action provided.
+
+   ```java
+   nonEmptyOptional.ifPresent(System.out::println);  // Prints "Hello"
+   
+   if (nullableOptional.isPresent()) {
+       System.out.println("Value is present");
+   } else {
+       System.out.println("No value");
+   }
+   ```
+
+3. **Retrieving the Value:**
+   - **`get()`**: Returns the value if present, but throws `NoSuchElementException` if the `Optional` is empty.
+   - **`orElse(T other)`**: Returns the value if present, or returns the provided default value if the `Optional` is empty.
+   - **`orElseGet(Supplier<? extends T> other)`**: Returns the value if present, or invokes the `Supplier` to provide a value.
+   - **`orElseThrow(Supplier<? extends X> exceptionSupplier)`**: Throws an exception provided by the `Supplier` if the `Optional` is empty.
+
+   ```java
+   String value = nonEmptyOptional.get();  // Returns "Hello"
+   String defaultValue = nullableOptional.orElse("Default");  // Returns "Default"
+   ```
+
+4. **Chaining Optionals:**
+   - **`map(Function<? super T, ? extends U> mapper)`**: Transforms the value if present using a function.
+   - **`flatMap(Function<? super T, Optional<U>> mapper)`**: Similar to `map`, but used when the mapping function returns an `Optional`.
+
+   ```java
+   Optional<String> upperCaseValue = nonEmptyOptional.map(String::toUpperCase);  // "HELLO"
+   
+   Optional<Integer> stringLength = nonEmptyOptional.map(String::length);  // 5
+   ```
+
+### Example:
+
+```java
+import java.util.Optional;
+
+public class OptionalExample {
+    public static void main(String[] args) {
+        Optional<String> optionalName = Optional.ofNullable("John");
+
+        // Check if the value is present
+        if (optionalName.isPresent()) {
+            System.out.println("Name: " + optionalName.get());
+        }
+
+        // Use orElse to provide a default value
+        String name = optionalName.orElse("Default Name");
+        System.out.println("Name: " + name);
+
+        // Use ifPresent to perform an action if a value is present
+        optionalName.ifPresent(n -> System.out.println("Name in uppercase: " + n.toUpperCase()));
+    }
+}
+```
+
+### Advantages of `Optional`:
+- Prevents `NullPointerException`.
+- Encourages writing cleaner and more readable code by avoiding explicit null checks.
+- Provides flexibility in handling cases where a value may or may not be present.
+
+
 
 
 
