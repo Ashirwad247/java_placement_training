@@ -1,31 +1,39 @@
 import java.util.*;
 
 public class one {
-    //search of an element in 2d matrix using dfs on a sorted matrix
+    //merge two sorted arrays
     
 
     public static void main(String[] args) {
+      int a1[] = {1,3,3,2,3};
 
-         int a[][] =  {{4,5,2,7}, {0,1,12,3},{8,9,10,6}};
-        
-        int x = 6;
-        int flag=0;
+      int a2[] = {4, 5, 6};
+      Arrays.sort(a1);
+      Arrays.sort(a2);
+      int arr[] = new int[a1.length+a2.length];
+      int i =0, j=0,ind=0;
+      while(i<a1.length && j<a2.length){
+        if(a1[i]<a2[j]){
+          arr[ind++]=a1[i++];
+       
+        }else if(a1[i]>a2[j]){
+          arr[ind++]=a2[j++];
 
-        int i=0, j=3;
-  
-        while(i<3 && j>=0){
-          if(a[i][j]==x){
-            System.out.println("Element found at ("+i+","+j+")");
-            flag =1;
-            break;
-          }
-          else if(a[i][j]>x){
-            j--;
-          }else{
-            i++;
-          }
+        }else{
+          arr[ind++]=a1[i++];
+          j++;
         }
-        if(flag==0)
-            System.out.println("Not found");
+      }
+
+      while(i<a1.length){
+        arr[ind++]=a1[i];
+      }
+      while(j<a2.length){
+        arr[ind++]=a2[j++];
+      }
+      for(int k:arr){
+        System.out.print(k+" ");
+      }
+    
     }
 }
