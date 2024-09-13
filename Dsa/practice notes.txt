@@ -1107,5 +1107,192 @@ public class one {
 }
 
 
+ // Method to merge two arrays and remove duplicates
+    public static int[] mergeAndRemoveDuplicates(int[] a1, int[] a2) {
+        // Use a TreeSet to automatically sort and remove duplicates
+        Set<Integer> set = new TreeSet<>();
+        
+        // Add elements from the first array
+        for (int num : a1) {
+            set.add(num);
+        }
+        
+        // Add elements from the second array
+        for (int num : a2) {
+            set.add(num);
+        }
+        
+        // Convert the set to an array
+        int[] result = new int[set.size()];
+        int index = 0;
+        for (int num : set) {
+            result[index++] = num;
+        }
+        
+        return result;
+    }
+}
+
+
+__________________________________________________________________________________________
+import java.util.*;
+
+public class one {
+    //toggle string cases
+    
+
+    public static void main(String[] args) {
+     String s = "Hello";
+     String asn ="";
+     for(int i=0;i<s.length();i++){
+      if(Character.isUpperCase(s.charAt(i))){
+        asn+=Character.toLowerCase(s.charAt(i));
+      }else{
+                asn+=Character.toUpperCase(s.charAt(i));
+
+      }
+      System.out.println(asn);
+     }
+    
+    }
+}
+
+
+__________________________________________________________________________________________
+**
+
+import java.util.*;
+
+public class one {
+    //remove vowels from the string
+    
+
+    public static void main(String[] args) {
+     String s = "Hello";
+    String s1 = "";
+      s1=s.replaceAll("[aeiou]","");
+      System.out.println(s1);
+     }
+    
+    
+}
+__________________________________________________________________________________________
+**
+import java.util.*;
+
+public class one {
+    //remove special characters from string
+    
+
+    public static void main(String[] args) {
+    String s = "hel1456lo56wor%^ld";
+     s=s.replaceAll("[^a-zA-Z]","");
+     System.out.println(s);
+     }
+    
+    
+}
+
+import java.util.*;
+
+public class one {
+    //remove special characters from string
+    
+
+    public static void main(String[] args) {
+    String s = "hel1456lo56wor%^ld";
+   for (int i = 0; i < s.length(); i++)
+        {
+            // Finding the character whose
+            // ASCII value fall under this
+            // range
+            if (s.charAt(i) < 'A' || s.charAt(i) > 'Z' && s.charAt(i) < 'a' || s.charAt(i) > 'z')
+            {
+
+                // erase function to erase
+                // the character
+                s = s.substring(0, i) + s.substring(i + 1);
+                i--;
+                System.out.println(i);
+            }
+        }
+        // System.out.print(s);
+    System.out.println(s);
+
+    }
+    
+    
+}
+
+__________________________________________________________________________________________
+**remove space in string
+just use s.split("[//s]", "")
+import java.util.*;
+
+public class one {
+    //remove space characters from string
+    
+
+    public static void main(String[] args) {
+    String s = "Presp ins the last ba";
+    char c[] = s.toCharArray();
+    StringBuffer sb = new StringBuffer();
+    for(int i=0;i<c.length;i++){
+      if(c[i]!=' '&& c[i]!='\t'){
+        sb.append(c[i]);
+      }
+    } 
+    System.out.println(sb);
+
+    }
+    
+    
+}
+__________________________________________________________________________________________
+**largest sum contigiuos subarray //kadanes algorithm
+
+public static void main(String[] args) {
+        int[] arr = {-2, -3, 4, -1, -2, 1, 5, -3};
+        int n = arr.length;
+        int res = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            int sum = 0;
+            for (int j = i; j < n; j++) {
+                sum += arr[j];
+                res = Math.max(sum, res);
+            }
+        }
+        System.out.println(res);
+    }
+
+  import java.util.*;
+
+public class one {
+    //kadens algo
+    
+
+    public static void main(String[] args) {
+     int[] arr = {-2, -3, 4, -1, -2, 1, 5, -3};
+        int n = arr.length;
+        int max_sum = Integer.MIN_VALUE, curr_sum = 0;
+
+        for (int i = 0; i < n; i++) {
+          curr_sum+=arr[i];
+          if(max_sum<curr_sum) max_sum=curr_sum;
+          if(max_sum<0) curr_sum=0;
+        }
+
+        System.out.println(max_sum);
+
+    }
+    
+    
+}
+
+__________________________________________________________________________________________
+**sudoku solver (leetcode)
+
+
+
 
 
