@@ -1,29 +1,39 @@
 import java.util.*;
 
 public class one {
-    //kadens algo
-    
+    //prefix Sum
+ 
+
+   
 
     public static void main(String[] args) {
-      int x = 1000000045;
-     boolean negFlag=false;
-        if(x<0) {negFlag=true;x=-x;}
-        int num=0;
-        int prevNum=0;
-        while(x>0){
-            int r=x%10;
-            num=(num*10)+r;
-            if((num-r)/10!=prevNum){
-                
-                break;
-            }
-            System.out.println(num);
-            prevNum = num;
-            x=x/10;
-        }
-        num=negFlag?-num:num;
-        System.out.println(num);
-    }
+  
+     String str ="prepinsta";
+     int[] freq = new int[str.length()]; 
+     int i, j; 
+
+     //Converts given string into character array 
+     char string[] = str.toCharArray(); 
+     for(i = 0; i <str.length(); i++) { 
+        freq[i] = 1; 
+          for(j = i+1; j <str.length(); j++) { 
+            if(string[i] == string[j]) { 
+            freq[i]++; 
+
+           //Set string[j] to 0 to avoid printing visited character 
+            string[j] = '0'; 
+          } 
+       } 
+    } 
+    System.out.println(string[0]);
+    //Displays the each character and their corresponding frequency 
+    System.out.println("Characters and their corresponding frequencies"); 
+    for(i = 0; i <freq.length; i++) { 
+       if(string[i] != ' ' && string[i] != '0') 
+          System.out.println(string[i] + "-" + freq[i]); 
+       } 
+   }
+    
     
     
 }

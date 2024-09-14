@@ -1344,7 +1344,165 @@ class Solution {
     }
 }
 
+__________________________________________________________________________________________
+**top k frequent elements(leetcode)
 
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+     // Using HashMap to count frequency of each number
+        Map<Integer, Integer> count = new HashMap<>();
+        for (int n : nums) {
+            count.put(n, count.getOrDefault(n, 0) + 1);
+        }
+
+        // Using an array of lists to store numbers by their frequency
+        List<Integer>[] freq = new List[nums.length + 1];
+        for (int i = 0; i <= nums.length; i++) {
+            freq[i] = new ArrayList<>();
+        }
+
+        // Group numbers by their frequency
+        for (int key : count.keySet()) {
+            int frequency = count.get(key);
+            freq[frequency].add(key);
+        }
+
+        // Collecting top k frequent elements
+        List<Integer> res = new ArrayList<>();
+        for (int i = freq.length - 1; i > 0; i--) {
+            if (freq[i].size() > 0) {
+                for (int num : freq[i]) {
+                    res.add(num);
+                    if (res.size() == k) {
+                        // Converting List<Integer> to int[] before returning
+                        int[] result = new int[k];
+                        for (int j = 0; j < k; j++) {
+                            result[j] = res.get(j);
+                        }
+                        return result;
+                    }
+                }
+            }
+        }
+
+        return new int[0]; // If no elements are found, return an empty array
+    }
+}
+
+//algo...
+//take hash with frequencies
+//create freq list for frequenices
+//store the frreq in freqarray as keys 
+//res list integer type
+__________________________________________________________________________________________
+**preFix sum
+import java.util.*;
+
+public class one {
+    //prefix Sum
+    public static int[] computePrefixSums(int[] arr) {
+        int n = arr.length;
+        int prefixSums[] = new int[n];
+        prefixSums[0] = arr[0];
+        for(int i =1;i<n;i++){
+            prefixSums[i] = prefixSums[i-1]+arr[i];
+        }
+        return prefixSums;
+    }
+
+    public static int rangeSum(int[] prefixSums,int i, int j){
+        if(i==0){
+            return prefixSums[j];
+        }else{
+            return prefixSums[j]-prefixSums[i-1];
+        }
+    }
+    
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5};
+        int[] prefixSums = computePrefixSums(arr);
+
+        int i = 1; // Starting index
+        int j = 3; // Ending index
+        System.out.println("Sum between indices " + i + " and " + j + " is: " + rangeSum(prefixSums, i, j));
+    }
+    
+    
+}
+
+__________________________________________________________________________________________
+**remove brackets from list
+import java.util.Scanner;
+
+public class Main {
+
+public static void main(String[] args) {
+     
+     String s = "(a+b)=c";
+     String result = s.replaceAll("[(){}]","");
+     System.out.println("Expression without brackets : "+result);
+  }}
+__________________________________________________________________________________________
+**use StringBuffer.reverse for reversing the string
+__________________________________________________________________________________________
+**sum of numbers in string
+public class Main {
+public static void main(String[] args) {
+String str="4PREP2INSTAA6";
+int sum=0;
+for(int i=0;i<str.length();i++){ 
+if(str.charAt(i)>='0' && str.charAt(i)<='9'){
+sum+=(str.charAt(i)-'0');
+}
+}
+System.out.println("Sum of all digits " +sum );
+}
+}
+__________________________________________________________________________________________
+**count freq of characters in string
+
+import java.util.*;
+
+public class one {
+    //prefix Sum
+ 
+
+   
+
+    public static void main(String[] args) {
+  
+     String str ="prepinsta";
+     int[] freq = new int[str.length()]; 
+     int i, j; 
+
+     //Converts given string into character array 
+     char string[] = str.toCharArray(); 
+     for(i = 0; i <str.length(); i++) { 
+        freq[i] = 1; 
+          for(j = i+1; j <str.length(); j++) { 
+            if(string[i] == string[j]) { 
+            freq[i]++; 
+
+           //Set string[j] to 0 to avoid printing visited character 
+            string[j] = '0'; 
+          } 
+       } 
+    } 
+    System.out.println(string[0]);
+    //Displays the each character and their corresponding frequency 
+    System.out.println("Characters and their corresponding frequencies"); 
+    for(i = 0; i <freq.length; i++) { 
+       if(string[i] != ' ' && string[i] != '0') 
+          System.out.println(string[i] + "-" + freq[i]); 
+       } 
+   }
+    
+    
+    
+}
+__________________________________________________________________________________________
 
 
 
