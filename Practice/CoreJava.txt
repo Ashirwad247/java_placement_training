@@ -1,0 +1,532 @@
+class A implements Runnable{
+    public void run(){
+        for(int i=1;i<=100;i++){
+            System.out.println("hi");
+            try{
+            Thread.sleep(10);//milliseconds
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+}
+class B implements Runnable{
+    public void run(){
+        for(int i=1;i<=100;i++){
+            System.out.println("hello");
+              try{
+            Thread.sleep(10);//milliseconds
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+}
+public class P{
+    public static void main(String args[]){
+        Runnable obj1 = new Runnable(){
+            public void run(){
+                  for(int i=1;i<=100;i++){
+                System.out.println("hi");
+                try{
+                Thread.sleep(10);//milliseconds
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+              }
+            }
+               
+        };
+        Runnable obj2 = ()->{
+               for(int i=1;i<=100;i++){
+                System.out.println("hello");
+                try{
+                Thread.sleep(10);//milliseconds
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+              }
+            
+        };
+        // System.out.println(obj1.getPriority());
+       
+        Thread t1 = new Thread(obj1);
+        Thread t2 = new Thread(obj2);
+        t1.start();
+        t2.start();
+    }
+}
+
+**Thread States 
+new, waiting, runnable, running, dead
+new->start()-runnable->run()-running->sleep(),wait()-waiting
+waiting->notify()-runnable, running->stop()-dead
+
+
+
+import java.util.*;
+import java.io.*;
+public class P{
+    public static void main(String args[]){
+        Thread t =  Thread.currentThread();
+        System.out.println("current thread "+t);/[main, 5 main]
+        System.out.println("name "+t.getName());//main
+    }
+     
+    
+}
+
+
+
+//synchronized
+import java.util.*;
+import java.io.*;
+
+class Reserve implements Runnable{
+    int avail = 1;
+    int wanted;
+    Reserve(int i){
+        wanted =i;
+    }
+    public void run(){
+        synchronized(this){
+            System.out.println(avail);
+            if(avail>=wanted){
+                String name = Thread.currentThread().getName();
+                System.out.println(wanted+" Berths reseved for "+name);
+                try{
+                    Thread.sleep(1500);
+                    avail = avail-wanted;
+
+                }catch(Exception e){
+
+                }
+            }
+            else{
+                System.out.println("Sorry no berth");
+            }
+        }
+    }
+}
+public class P{
+    public static void main(String args[]){
+       Reserve r = new Reserve(1);
+       Thread t1 = new Thread(r);
+       Thread t2 = new Thread(r);
+       t1.setName("First peson ");
+       t2.setName("Second peson ");
+       t1.start();
+       t2.start();
+    }
+     
+    
+}
+
+1. Deadlock:
+
+A deadlock occurs when two or more threads are blocked forever, each waiting on the other to release a lock. Here’s an example:
+class Resource1 {
+    public synchronized void method1(Resource2 r2) {
+        System.out.println("Resource1: Holding lock on Resource1");
+        try { Thread.sleep(100); } catch (InterruptedException e) {}
+        System.out.println("Resource1: Waiting for Resource2");
+        r2.last();
+    }
+
+    public synchronized void last() {
+        System.out.println("Resource1: Inside last");
+    }
+}
+
+class Resource2 {
+    public synchronized void method2(Resource1 r1) {
+        System.out.println("Resource2: Holding lock on Resource2");
+        try { Thread.sleep(100); } catch (InterruptedException e) {}
+        System.out.println("Resource2: Waiting for Resource1");
+        r1.last();
+    }
+
+    public synchronized void last() {
+        System.out.println("Resource2: Inside last");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        final Resource1 r1 = new Resource1();
+        final Resource2 r2 = new Resource2();
+
+        new Thread(() -> r1.method1(r2)).start();
+        new Thread(() -> r2.method2(r1)).start();
+    }
+}
+
+2. Starvation:
+
+Starvation occurs when a thread is perpetually denied access to resources because other threads are continuously acquiring those resources. This can happen if thread priorities are not managed properly or if a thread is always outperformed by others.
+
+3. Thread Safety:
+
+Thread safety means ensuring that shared data structures are accessed and modified in a way that is safe from concurrent access. This is generally achieved through synchronization mechanisms, such as locks, or by using thread-safe data structures from the java.util.concurrent package.
+
+Example of Using ConcurrentHashMap for Thread Safety:
+
+import java.util.concurrent.ConcurrentHashMap;
+
+public class Main {
+    private static final ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+
+    public static void main(String[] args) {
+        Runnable task = () -> {
+            for (int i = 0; i < 1000; i++) {
+                map.put("key", map.getOrDefault("key", 0) + 1);
+            }
+        };
+
+        Thread t1 = new Thread(task);
+        Thread t2 = new Thread(task);
+
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Map size: " + map.get("key"));
+    }
+}
+
+_________________________________________
+Lambda expressions
+### Lambda Expressions in Java
+
+**Lambda expressions** in Java were introduced in **Java 8** as part of the functional programming features. They allow you to write more concise and readable code, especially when working with collections, streams, and functional interfaces.
+
+#### 1. **What is a Lambda Expression?**
+A lambda expression is essentially an anonymous function (a function without a name) that can be passed around as a parameter or used where a functional interface is expected.
+
+**Syntax**:
+```java
+(parameters) -> expression
+(parameters) -> { statements }
+```
+
+#### Example:
+```java
+// A simple lambda expression that takes two integers and returns their sum
+(int a, int b) -> a + b
+```
+
+#### 2. **Functional Interfaces**
+A functional interface is an interface that has exactly **one abstract method**. It can have multiple default or static methods, but only one abstract method. Lambda expressions work with these interfaces, and Java 8 provides several built-in functional interfaces like `Predicate`, `Consumer`, `Function`, and more.
+
+Some important functional interfaces are:
+
+- **Predicate<T>**: Accepts an input and returns a boolean.
+    ```java
+    Predicate<String> isEmpty = s -> s.isEmpty();
+    ```
+
+- **Consumer<T>**: Accepts an input and performs an action, without returning anything.
+    ```java
+    Consumer<String> print = s -> System.out.println(s);
+    ```
+
+- **Function<T, R>**: Accepts one argument and produces a result.
+    ```java
+    Function<Integer, Integer> square = x -> x * x;
+    ```
+
+#### Example of Using Functional Interfaces:
+```java
+import java.util.function.Predicate;
+import java.util.function.Consumer;
+
+public class LambdaExample {
+    public static void main(String[] args) {
+        Predicate<String> isShort = s -> s.length() < 5;
+        System.out.println(isShort.test("hello")); // Output: false
+
+        Consumer<String> print = s -> System.out.println(s);
+        print.accept("Hello, Lambda!"); // Output: Hello, Lambda!
+    }
+}
+```
+
+### 3. **Using Lambda Expressions in Collection Operations**
+
+Lambda expressions are most commonly used with Java collections and streams. Here are a few ways to use them:
+
+- **forEach()**: Allows you to iterate through a collection.
+- **filter()**: Filters a stream based on a predicate.
+- **map()**: Transforms each element in a collection.
+- **reduce()**: Reduces the elements of a collection into a single value.
+
+#### Example with Collections:
+```java
+import java.util.Arrays;
+import java.util.List;
+
+public class CollectionOperations {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("John", "Jane", "Jack", "Doe");
+
+        // Using forEach with a lambda to print each element
+        names.forEach(name -> System.out.println(name));
+
+        // Using filter with a lambda to find names with length greater than 3
+        names.stream()
+            .filter(name -> name.length() > 3)
+            .forEach(name -> System.out.println("Filtered name: " + name));
+
+        // Using map with a lambda to transform names to uppercase
+        names.stream()
+            .map(name -> name.toUpperCase())
+            .forEach(name -> System.out.println("Uppercase name: " + name));
+    }
+}
+```
+
+**Explanation**:
+- `forEach()` takes a lambda and applies it to each element in the list.
+- `filter()` uses a `Predicate` to include only names with a length greater than 3.
+- `map()` applies a transformation (converting names to uppercase) using the lambda expression.
+
+### 4. **Goal: Get Comfortable with Functional Programming**
+
+Functional programming encourages writing code that is concise, expressive, and avoids side effects. Lambdas and functional interfaces are central to this style of programming in Java, especially when working with streams.
+
+### Key Points:
+- **Lambda expressions** simplify code by removing boilerplate, especially when working with anonymous classes.
+- **Functional interfaces** like `Predicate` and `Consumer` allow you to pass behavior (as lambdas) to methods.
+- **Stream API** works seamlessly with lambda expressions, providing methods like `filter()`, `map()`, and `reduce()` for processing data in a functional way.
+
+### Practice:
+1. Use `forEach()`, `filter()`, and `map()` on collections.
+2. Write custom `Predicate`, `Consumer`, or `Function` interfaces for specific use cases.
+3. Combine multiple lambda expressions in stream operations to create more complex functionality.
+
+By practicing with these features, you'll become comfortable using lambdas and adopting functional programming in Java.
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Arrays;
+import java.util.stream.Stream;//is an interface
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.Function;
+
+class P{
+    public static void main(String []args){
+        List<Integer> nums = Arrays.asList(4, 5, 7, 2);
+        
+       Predicate<Integer> p = new Predicate<Integer>(){
+         public boolean test(Integer n){
+            return n%2==0;
+         }
+       };
+       Function<Integer, Integer> f = new Function<Integer, Integer>(){
+        public Integer apply(Integer n){
+            return n*2;
+        }
+      
+       };
+         Stream<Integer> s1 = nums.stream();
+        Stream<Integer> s2 = s1.filter(p);
+        Stream<Integer> s3 = s2.map(f);
+        int result = s3.reduce(0, (c,e)->c+e);
+        System.out.println(result);
+
+
+
+    }
+}
+
+_________________________________________
+A `LinkedList` in Java is a part of the Java Collections Framework and is implemented as a doubly-linked list. This means each element (node) in the list contains references to both the previous and the next element. The `LinkedList` class is found in the `java.util` package and offers a variety of methods for manipulating the list.
+
+### Key Characteristics of `LinkedList`
+
+1. **Dynamic Size**: Unlike arrays, `LinkedList` does not have a fixed size. It can grow or shrink as elements are added or removed.
+
+2. **Node-based Structure**: Each element in a `LinkedList` is stored in a node. Each node contains data and pointers (references) to the previous and next nodes in the list.
+
+3. **Efficient Insertions/Removals**: Insertions and deletions can be done efficiently, especially if you have a reference to the node where the insertion or deletion should occur. This is because the list does not need to shift elements as in an array.
+
+4. **Performance**: While accessing elements by index is slower than an `ArrayList` (due to linear traversal), operations like insertion and deletion at the beginning or end of the list are faster.
+
+### Common Operations with `LinkedList`
+
+Here’s how you can use and operate on a `LinkedList` in Java:
+
+#### 1. **Creating a `LinkedList`**
+
+To create a `LinkedList`, you can use the default constructor or initialize it with a collection.
+
+```java
+import java.util.LinkedList;
+
+public class LinkedListExample {
+    public static void main(String[] args) {
+        LinkedList<String> list = new LinkedList<>();
+        LinkedList<Integer> numbers = new LinkedList<>(Arrays.asList(1, 2, 3, 4, 5));
+    }
+}
+```
+
+#### 2. **Adding Elements**
+
+You can add elements to a `LinkedList` in several ways:
+
+- **At the End**: `add()`, `addLast()`
+- **At the Beginning**: `addFirst()`
+- **At a Specific Index**: `add(index, element)`
+
+```java
+list.add("A");          // Adds "A" to the end
+list.addFirst("B");    // Adds "B" to the beginning
+list.addLast("C");     // Adds "C" to the end
+list.add(1, "D");      // Adds "D" at index 1
+```
+
+#### 3. **Accessing Elements**
+
+To access elements, you can use:
+
+- **Get by Index**: `get(index)`
+- **Get First/Last**: `getFirst()`, `getLast()`
+
+```java
+String first = list.getFirst();   // Retrieves the first element
+String last = list.getLast();     // Retrieves the last element
+String element = list.get(2);     // Retrieves the element at index 2
+```
+
+#### 4. **Removing Elements**
+
+You can remove elements in several ways:
+
+- **By Index**: `remove(index)`
+- **By Object**: `remove(Object o)`
+- **First/Last Element**: `removeFirst()`, `removeLast()`
+
+```java
+list.remove(1);          // Removes element at index 1
+list.remove("A");       // Removes the first occurrence of "A"
+list.removeFirst();    // Removes the first element
+list.removeLast();     // Removes the last element
+```
+
+#### 5. **Iterating Over the List**
+
+You can iterate over a `LinkedList` using:
+
+- **For-Each Loop**
+- **Iterator**
+- **ListIterator** (which provides more control for bi-directional traversal)
+
+```java
+// For-Each Loop
+for (String s : list) {
+    System.out.println(s);
+}
+
+// Iterator
+Iterator<String> iterator = list.iterator();
+while (iterator.hasNext()) {
+    System.out.println(iterator.next());
+}
+
+// ListIterator
+ListIterator<String> listIterator = list.listIterator();
+while (listIterator.hasNext()) {
+    System.out.println(listIterator.next());
+}
+```
+
+#### 6. **Other Useful Methods**
+
+- **Check for Presence**: `contains(Object o)`
+- **Get Size**: `size()`
+- **Clear the List**: `clear()`
+- **Convert to Array**: `toArray()`
+
+```java
+boolean containsElement = list.contains("B"); // Checks if "B" is in the list
+int size = list.size();                      // Gets the number of elements in the list
+list.clear();                                // Removes all elements
+Object[] array = list.toArray();             // Converts the list to an array
+```
+
+### When to Use `LinkedList`
+
+- **Frequent Insertions/Deletions**: Ideal when you need to frequently insert or delete elements, especially at the beginning or middle of the list.
+- **Memory Usage**: If you need a data structure that dynamically grows and shrinks with operations.
+
+### When Not to Use `LinkedList`
+
+- **Random Access**: If you need frequent random access by index, an `ArrayList` might be more efficient due to its array-based structure which allows for quicker index-based access.
+
+In summary, a `LinkedList` in Java provides a flexible, dynamic, and efficient way to handle collections of objects where frequent insertions and deletions are required. Understanding its operations and trade-offs compared to other collections like `ArrayList` will help you choose the right data structure for your needs.
+________________-
+A `ListNode` is a fundamental building block for singly or doubly linked lists, a common data structure used in many programming languages. Here's an example of how a simple `ListNode` might be implemented in Java:
+
+### Singly Linked List Node
+```java
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {}
+
+    ListNode(int val) {
+        this.val = val;
+    }
+
+    ListNode(int val, ListNode next) {
+        this.val = val;
+        this.next = next;
+    }
+}
+```
+
+- `val`: Stores the value/data of the node.
+- `next`: Points to the next node in the list (or `null` if it's the end of the list).
+
+### Example Usage
+
+```java
+public class LinkedListExample {
+    public static void main(String[] args) {
+        // Creating individual nodes
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+
+        // Linking nodes to form a chain: 1 -> 2 -> 3
+        node1.next = node2;
+        node2.next = node3;
+
+        // Traversing the list
+        ListNode current = node1;
+        while (current != null) {
+            System.out.println(current.val); // Prints 1, 2, 3
+            current = current.next;
+        }
+    }
+}
+```
+
+Would you like a detailed explanation of how linked lists work or how to manipulate them?
+
+
