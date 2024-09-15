@@ -1,0 +1,11 @@
+search in sorted 2d arra
+reverse a string
+top k freq elements
+sudoku solver
+abundant number
+longest longestConsecutive sequence
+harshard number
+merge two sorted arrays with dups and non 
+valid anagram
+sum of strings
+F(N)

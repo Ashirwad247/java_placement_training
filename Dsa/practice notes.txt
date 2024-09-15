@@ -1025,11 +1025,58 @@ class one
 }
 __________________________________________________________________________________________
 **Group Anagrams
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map <String, List<String>> mp = new HashMap<>();
+        for(String s:strs){
+            int[] count = new int[26];
+            for(char c:s.toCharArray()){
+                count[c-'a']++;
+            }
+            StringBuilder sb = new StringBuilder();
+            for(int i :count) {
+                sb.append("#");
+                sb.append(i);
+            }
+            String key = sb.toString();
+            if(!mp.containsKey(key)){
+                mp.put(key, new ArrayList<>());
+            }
+            mp.get(key).add(s);
+        }
+        return new ArrayList<>(mp.values());
+    }
+}
 
 
 
 __________________________________________________________________________________________
 **longest Subsequent array
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> s = new HashSet<>();
+         int n = nums.length;
+        if (n == 0)
+            return 0;
+        for(int i:nums){
+            s.add(i);
+        }
+        int longest = 1;
+        for(int it:s){
+            if(!s.contains(it-1)){
+                int cnt  =1;
+                int x = it;
+                while(s.contains(x+1)){
+                    x = x+1;
+                    cnt++;
+                }
+               longest =Math.max(cnt, longest);
+            }
+        }
+     return longest;
+    }
+}
+
 
 __________________________________________________________________________________________
 **search in a 2d sorted array
