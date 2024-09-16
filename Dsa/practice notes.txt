@@ -897,7 +897,7 @@ class one{
 
 }
 __________________________________________________________________________________________
-**
+**F(N) calculation
 
 import java.lang.*;
 import java.util.Arrays;
@@ -1337,7 +1337,7 @@ public class one {
 }
 
 __________________________________________________________________________________________
-**sudoku solver (leetcode)
+**valid sudoku (leetcode)
 class Solution {
     public boolean isValidSudoku(char[][] board) {
         Map <Integer, Set<Character>> rows = new HashMap<>();
@@ -1357,7 +1357,7 @@ class Solution {
                 if(board[r][c]=='.') continue;
                 char num = board[r][c];
                 String sqKey = (r/3)+","+(c/3);
-                if(rows.get(r).contains(num)|| cols.get(c).contains(num)||
+                if(rows.get(r).contains(num) || cols.get(c).contains(num)||
                     sqs.get(sqKey).contains(num)
                 ) return false;
                 rows.get(r).add(num);
@@ -1550,6 +1550,175 @@ public class one {
     
 }
 __________________________________________________________________________________________
+Palindrome String(leetcode)
+class Solution {
+    public boolean isPalindrome(String s) {
+       StringBuilder filteredString = new StringBuilder();
+       for(char c:s.toCharArray()){
+        if(Character.isLetterOrDigit(c)){
+            filteredString.append(Character.toLowerCase(c));
+        }
+     
+       }
+           String cleaned = filteredString.toString();
+        String reversed = new StringBuilder(cleaned).reverse().toString();
+        return cleaned.equals(reversed);
+
+    }
+}
+
+two pointer method
+
+class Solution {
+    public boolean isPalindrome(String s) {
+        // Initialize two pointers
+        int left = 0;
+        int right = s.length() - 1;
+
+        while (left <= right) {
+            // Move left pointer to the next alphanumeric character
+            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
+                left++;
+            }
+
+            // Move right pointer to the previous alphanumeric character
+            while (left < right && !Character.isLetterOrDigit(s.charAt(right))) {
+                right--;
+            }
+
+            // Compare characters
+            if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
+                return false;
+            }
+
+            // Move pointers inward
+            left++;
+            right--;
+        }
+
+        return true;
+    }
+}
 
 
 
+__________________________________________________________________________________________
+two sum 2 (leetcode)
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int sum=0;
+        int l =0, r=numbers.length-1;
+        while(l<r){
+            sum=numbers[l]+numbers[r];
+            if(sum==target) return new int[]{l+1,r+1};
+            else if(sum<target) l++;
+            else r--;
+        }
+        return new int[0];
+    }
+}
+__________________________________________________________________________________________
+**First non repeating character in string
+class Main
+{
+    public static void main(String args[])
+    {
+        String inputStr ="prepinsta";
+        boolean flag = true;
+
+        for(char i :inputStr.toCharArray())
+        {
+            // if current character is the last occurrence in the string
+            if (inputStr.indexOf(i) == inputStr.lastIndexOf(i))
+            {
+                System.out.println("First non-repeating character is: "+ i);
+                flag = false;
+                break;
+            }
+        }
+
+        if(flag)
+            System.out.println("There is no non repeating character in input string");
+    }
+}__________________________________________________________________________________________
+**Replace Subtring in String
+public class Main {
+    public static void main(String[] args) {
+        String originalString = "Hello, World!";
+        String substringToReplace = "World";
+        String replacement = "Java";
+
+        // Replace the substring
+        String modifiedString = replaceSubstring(originalString, substringToReplace, replacement);
+
+        // Print the modified string
+        System.out.println("Original String: " + originalString);
+        System.out.println("Modified String: " + modifiedString);
+    }
+
+    public static String replaceSubstring(String original, String toReplace, String replacement) {
+        // Check if the original string contains the substring to replace
+        if (!original.contains(toReplace)) {
+            return original; // If not, return the original string as it is
+        }
+
+        // Use the replaceAll method to replace all occurrences of the substring
+        String modified = original.replaceAll(toReplace, replacement);
+return modified;
+}
+}
+
+__________________________________________________________________________________________
+**String word replace ment
+public
+class Main {
+    static void remove(String str, String word) {
+        String msg[] = str.split(" ");
+        String new_str = "";
+
+        // Iterating the string using for each loop
+        for (String words : msg) {
+
+            // If desired word is found
+            if (!words.equals(word)) {
+                // Concat the word not equal to the given word
+                new_str += words + " ";
+            }
+        }
+        // Print the new String
+        System.out.print(new_str);
+    }
+    public
+    static void main(String[] args) {
+        // Custom string as input
+        String str = "This is the prepinsta";
+        // Word to be removed from above string
+        String word = "the";
+        // Calling the method 1 by passing both strings to it
+        remove(str, word);
+    }
+}
+
+public class Main
+{
+ public static void main(String[] args)
+    {
+
+        // Given String as input from which
+        // word has to be removed
+        String str = "This is the prepinsta";
+
+        // Desired word to be removed
+        String word = "the";
+        // Replace all words by "" string
+        // using replaceAll() method
+        str = str.replaceAll("the", "");
+
+        // Trim the string using trim() method
+        str = str.trim();
+
+        // Printing the final string
+        System.out.print(str);
+    }
+}
+__________________________________________________________________________________________
