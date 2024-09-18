@@ -1750,3 +1750,29 @@ class Solution {
         return ans;
     }
 }
+__________________________________________________________________________________________
+**container with most water
+
+class Solution {
+    public int maxArea(int[] height) {
+          int res = 0;
+        int l = 0, r = height.length - 1;
+
+        while (l < r) {
+            // Calculate the area
+            int area = (r - l) * Math.min(height[l], height[r]);
+            // Update the result with the maximum area
+            res = Math.max(res, area);
+
+            // Move the pointer with the smaller height
+            if (height[l] < height[r]) {
+                l++;
+            } else {
+                r--;
+            }
+        }
+
+        return res;
+    }
+}
+__________________________________________________________________________________________
