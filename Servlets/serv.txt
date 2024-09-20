@@ -1,0 +1,379 @@
+package com.john;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+public class AddServlet extends HttpServlet{
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		int i = Integer.parseInt(req.getParameter("num1"));
+		int j = Integer.parseInt(req.getParameter("num2"));
+		int k = i+j;
+		k = k*k;
+        req.setAttribute("k", k);
+//		request dispatcher 54:23
+		RequestDispatcher rd = req.getRequestDispatcher("sq");
+		try{
+			rd.forward(req, res);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	
+	}
+}
+
+--
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0" metadata-complete="true">
+	<servlet>
+		<servlet-name>abc</servlet-name>
+		<servlet-class>com.john.AddServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>pqr</servlet-name>
+		<servlet-class>com.john.sqServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>abc</servlet-name>
+		<url-pattern>/add</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>pqr</servlet-name>
+		<url-pattern>/sq</url-pattern>
+	</servlet-mapping>
+</web-app>
+--
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="add" method="get">
+	Enter first number:<input type="text" name="num1"></input>
+	Enter second number:<input type="text" name="num2"></input>
+	<input type="submit">
+	</form>
+</body>
+</html>
+--
+package com.john;
+
+import java.io.IOException;
+
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class sqServlet extends HttpServlet{
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		
+		int k = (int)req.getAttribute("k");
+		k = k*k;
+		PrintWriter out = res.getWriter();
+		out.println("Result is "+k);
+	}
+
+}
+
+--
+send Redirect URL
+
+sq.servlet
+
+package com.john;
+
+import java.io.IOException;
+
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class sqServlet extends HttpServlet{
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		
+		int k = Integer.parseInt(req.getParameter("k"));
+		k = k*k;
+		PrintWriter out = res.getWriter();
+		out.println("Result is "+k);
+	}
+
+}
+
+
+AddServlet
+
+package com.john;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+public class AddServlet extends HttpServlet{
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		int i = Integer.parseInt(req.getParameter("num1"));
+		int j = Integer.parseInt(req.getParameter("num2"));
+		int k = i+j;
+		//session management
+	    res.sendRedirect("sq?k="+k);
+	
+	}
+}
+
+__________________________________________________________________________________________
+**HttpSession 
+
+package com.john;
+
+import java.io.IOException;
+
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+public class sqServlet extends HttpServlet{
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		HttpSession session = req.getSession();
+		//session.removeAttribute("k");
+		int k = (int)session.getAttribute("k");
+		k = k*k;
+		PrintWriter out = res.getWriter();
+		out.println("Result is "+k);
+	}
+
+}
+
+package com.john;
+import java.io.IOException;
+
+import javax.servlet.http.HttpSession;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+public class AddServlet extends HttpServlet{
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		int i = Integer.parseInt(req.getParameter("num1"));
+		int j = Integer.parseInt(req.getParameter("num2"));
+		int k = i+j;
+		//session management
+		HttpSession session = req.getSession();
+		session.setAttribute("k", k);
+	    res.sendRedirect("sq?k="+k);
+	
+	}
+}
+
+
+__________________________________________________________________________________________
+cookies
+
+package com.john;
+import java.io.IOException;
+
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+public class AddServlet extends HttpServlet{
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		int i = Integer.parseInt(req.getParameter("num1"));
+		int j = Integer.parseInt(req.getParameter("num2"));
+		int k = i+j;
+		
+		Cookie cookie = new Cookie("k", k+"");
+		res.addCookie(cookie);
+	    res.sendRedirect("sq?k="+k);
+	
+	}
+}
+
+package com.john;
+
+import java.io.IOException;
+
+import java.io.PrintWriter;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+public class sqServlet extends HttpServlet{
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		int k =0;
+		
+		Cookie cookies[]=req.getCookies();
+		for(Cookie c: cookies) {
+			if(c.getName().equals("k")) {
+				k= Integer.parseInt(c.getValue());
+			}
+		}
+		k = k*k;
+		PrintWriter out = res.getWriter();
+		out.println("Result is "+k);
+	}
+
+}
+
+__________________________________________________________________________________________
+servletConfig & servlet Context
+
+package com.john;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class MyServlet extends HttpServlet{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+		PrintWriter out = response.getWriter();
+		out.print("Hi ");
+		ServletContext ctx = getServletContext();
+		String str = ctx.getInitParameter("Phone");
+		out.print(str);
+		
+	}
+
+}
+
+-
+package com.john;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class MyServlet extends HttpServlet{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+		PrintWriter out = response.getWriter();
+		out.print("Hi ");
+		ServletConfig ctx = getServletConfig();
+		String str = ctx.getInitParameter("name");
+		out.print(str);
+		
+	}
+
+}
+
+-
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0" metadata-complete="true">
+
+	<servlet>
+	<servlet-name>abc</servlet-name>
+	<servlet-class>com.john.MyServlet</servlet-class>
+	<init-param><param-name>name</param-name>
+	<param-value>Sukesh</param-value>
+	</init-param>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>abc</servlet-name>
+	<url-pattern>/home</url-pattern>
+	</servlet-mapping>
+	<context-param>
+	<param-name>name</param-name>
+	<param-value>Navin</param-value>
+	</context-param>
+	<context-param>
+	<param-name>Phone</param-name>
+	<param-value>Samsung</param-value>
+	</context-param>
+</web-app>
+
+__________________________________________________________________________________________
+**servlet annotation configuration
+package com.john;
+import java.io.IOException;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/add")
+public class AddServlet extends HttpServlet{
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		int i = Integer.parseInt(req.getParameter("num1"));
+		int j = Integer.parseInt(req.getParameter("num2"));
+		int k = i+j;
+		
+		Cookie cookie = new Cookie("k", k+"");
+		res.addCookie(cookie);
+	    res.sendRedirect("sq?k="+k);
+	
+	}
+}
+
+
+__________________________________________________________________________________________
+**why jsp?
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+   <Form method="get" action="Add.jsp">
+    <input type="text" name="num1"><br>
+    <input type="text" name="num2"><br>
+    <input type="submit">
+    
+   </Form>
+
+</body>
+</html>
+
+
+Add.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body bgcolor = "cyan">
+	<%
+	 int i = Integer.parseInt(request.getParameter("num1"));
+    int j = Integer.parseInt(request.getParameter("num2"));
+    int k  =i+j;
+    out.println(k);
+
+	%>
+   
+</body>
+</html>

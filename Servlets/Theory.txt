@@ -1,0 +1,21 @@
+server to client
+sends response res object 
+client sends req obj
+
+HttpServletRequest and another are interfaces 
+
+to call s1 from s1
+using RequestDispatcher rd object
+req, res of s1 is added with values particularly req 
+
+sendredirect()
+session management
+__________________________________________________________________________________________
+Servlet to JSP 
+Tomcat is a servlet container
+jsp is converted into servlet
+implicit objects 
+<%--%> scriptlets
+<%! ---%> declaration
+<%@page import ="java.utl.Date"%> directive
+<%= %> Expression
