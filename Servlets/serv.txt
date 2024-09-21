@@ -377,3 +377,184 @@ Add.jsp
    
 </body>
 </html>
+
+__________________________________________________________________________________________
+Exception handling in jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" isErrorPage="true"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+Error
+ <%=exception.getMessage()%>
+</body>
+</html>
+
+
+home.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" errorPage="Error.jsp" %>
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+ <%int k = 9/0; %>
+</body>
+</html>
+__________________________________________________________________________________________
+**Jdbc in jsp
+
+
+import packages
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Student Details</title>
+</head>
+<body>
+    Hello world
+    <%
+        String url = "jdbc:mysql://localhost:3306/first"; // Use the correct port and database name
+        String username = "root";
+        String password = "rootsql";
+        String sql = "SELECT * FROM student";
+        Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
+        System.out.println("connecting....");
+        
+        try {
+            // Load MySQL JDBC driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            
+            // Establish connection
+            con = DriverManager.getConnection(url, username, password);
+            System.out.println("Connection established");
+
+            // Create a statement
+            st = con.createStatement();
+            
+            // Execute the query
+            rs = st.executeQuery(sql);
+            System.out.println(rs);
+            
+            if (rs.next()) {
+    %>
+                Rollno: <%= rs.getInt(1) %> <br/>
+                Name: <%= rs.getString(2) %> <br/>
+    <%
+            } else {
+                out.println("No data found for the given ID.");
+            }
+        } catch (Exception e) {
+             e.printStackTrace();
+            out.println("Error: Something is wrong\n" + e.getMessage());
+        } finally {
+            // Close resources
+            try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+            try { if (st != null) st.close(); } catch (SQLException e) { e.printStackTrace(); }
+            try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+    %>
+</body>
+</html>
+
+
+The `java.lang.ClassNotFoundException: com.mysql.jdbc.Driver` error indicates that the MySQL JDBC driver is not found in your application's classpath. Here are the steps you can follow to resolve this issue:
+
+### Steps to Fix ClassNotFoundException:
+
+1. **Ensure Correct Driver Version**:
+   - As mentioned earlier, if you're using MySQL Connector/J version 8.0 or above, the driver class name is `com.mysql.cj.jdbc.Driver`. If you're using an older version (before 8.0), the class name is `com.mysql.jdbc.Driver`.
+
+2. **Download the JDBC Driver**:
+   - If you haven't already, download the MySQL Connector/J JAR file from the [MySQL website](https://dev.mysql.com/downloads/connector/j/).
+
+3. **Add the JAR to Your Project**:
+   - In Eclipse:
+     1. Right-click your project in the Package Explorer.
+     2. Go to `Build Path` > `Configure Build Path`.
+     3. Click on the `Libraries` tab.
+     4. Click on `Add External JARs...` and select the downloaded MySQL Connector JAR file.
+     5. Click `Apply and Close`.
+
+4. **Deployment in Tomcat**:
+   - Ensure that the JAR is also available in your Tomcat server's `lib` directory if you want it to be available to all applications. This directory is usually located at `TOMCAT_HOME/lib`.
+
+5. **Restart Tomcat**:
+   - After adding the JAR file, make sure to restart your Tomcat server to ensure it picks up the changes.
+
+6. **Check Your Code**:
+   - Verify that your code correctly references the driver class name. Update your code to:
+
+     ```java
+     Class.forName("com.mysql.cj.jdbc.Driver");
+     ```
+
+### Example Code
+Here's a minimal setup for connecting to MySQL:
+
+```java
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Database Connection</title>
+</head>
+<body>
+Hello world
+<%
+    String url = "jdbc:mysql://localhost:3305/first";
+    String username = "root";
+    String password = "rootsql";
+    Connection con = null;
+    Statement st = null;
+    ResultSet rs = null;
+
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        con = DriverManager.getConnection(url, username, password);
+        st = con.createStatement();
+        rs = st.executeQuery("SELECT * FROM student WHERE id=1");
+        
+        if (rs.next()) {
+%>
+            Rollno: <%= rs.getString(1) %> <br/>
+            Name: <%= rs.getString(2) %> <br/>
+<%
+        } else {
+            out.println("No data found for the given ID.");
+        }
+    } catch (Exception e) {
+        out.println("Error: " + e.getMessage());
+    } finally {
+        try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+        try { if (st != null) st.close(); } catch (SQLException e) { e.printStackTrace(); }
+        try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
+    }
+%>
+</body>
+</html>
+```
+
+After following these steps, try running your application again. If you continue to encounter issues, let me know!
+__________________________________________________________________________________________
+**jstl jsp standard tag library
+

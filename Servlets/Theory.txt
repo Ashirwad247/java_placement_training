@@ -19,3 +19,88 @@ implicit objects
 <%! ---%> declaration
 <%@page import ="java.utl.Date"%> directive
 <%= %> Expression
+__________________________________________________________________________________________
+jsp directive has 
+@page, @include, @taglib
+<@page attribute="value" language="java" extends="className" session="true" autoFlush= "true|false" errorPage="error_url" info="informaton" isELIgnored"true|false"/>
+<%@page import%>
+<@include file="filename">
+<@include file="header.jsp">
+<@taglib uri="uri" prefix="fx:navin" %>
+__________________________________________________________________________________________
+implicit objets in jsp
+Request(HttpServletRequest)
+response(HttpServletResponse)
+pageContext(PageContext)
+out(JspWriter) PrintWriter object
+session (HttpSession)
+application(ServletContext)
+config(ServletConfig)
+no need to initiate
+
+pageContext.setAttribute("name", "navin", PageContext.SESSION_SCOPE)
+__________________________________________________________________________________________
+excpetion handling in jsp
+
+<%
+    try{
+        intk = 9/0;
+    }catch(Exception e){
+        out.println("There was an error"+e.getMessage());
+    }
+%>
+
+error.jsp
+__________________________________________________________________________________________
+**jdbc with jsp
+create database name
+show database();
+CREATE TABLE student (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+
+INSERT INTO student (name) 
+VALUES 
+    ('Rahul'), 
+    ('Hari'), 
+    ('Krishna');
+
+__________________________________________________________________________________________
+MVC using servlets and jsp
+client (us) get view(layouot) from /getPage 
+controller(Servlet) sends along with data(student info model)  to view 
+model pojo plain old java object
+
+Dao data access object 
+is used by controller
+
+__________________________________________________________________________________________
+jstl ${label}
+<%taglib %>
+
+in jsp
+<%taglib prefix="c" uri:="http://java.sun.com/jsp/jstl/core"%>
+<c:out value="Hello world"/>
+
+
+<c:import url="http://www.telusko.com/online.htm"></cimport> 
+to import data
+
+<c:set></c:set>
+
+${student}
+${student.name} gives error
+
+so for Student.java 
+generate bean meaning gtters and setters for the objects;
+and slot toStrin() override method 
+
+List<Student> studs = Arrays.asList(new Student(1, "navin"), new Student(2, "Arrti"));
+${student} gives all them
+<c:forEach item="${student}" var="s">
+    ${s}<br/>
+</c:forEach>
+
+//3:18:36
