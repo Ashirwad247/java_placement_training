@@ -103,4 +103,65 @@ ${student} gives all them
     ${s}<br/>
 </c:forEach>
 
-//3:18:36
+//3:18:36lkl
+
+
+<%taglib prefix="sql" uri= "http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
+<%taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core"/>
+use mario;
+select * from gadgets;
+<sql:setDatasource var="db" driver="com.mysql.jdbc.Driver"
+ user="root" password="" url="jdbc:mysql://localhost:3307/mario
+/>
+
+<sql:query var="rs" dataSource="${db}"select * from gadgets</sql:query>
+<c:forEach items="${rs.rows}" var="gadget">
+    <c:out value=${gadget.gid}></c:out>
+    <c:out value=${gadget.name}></c:out>
+    <c:out value=${gadget.price}></c:out>
+    <br>
+</>
+
+__________________________________________________________________________________________
+Jstl functional tags***
+<c:set var="str" value="Navin Reddy is a Java Trainer"/>
+Length${fn:Length(str)}
+<c:forEach items=${fn:split(str,' ')} var="s">
+ ${s}
+</c:forEach>
+${fn:contains(str, "Java")}//true
+${fn:contains(str, "Jsp")}//false
+<c:if test=${fn:contains(str, "java)}">
+    Java is there will//will be shown in the browser
+</c:if>
+<c:if test=${fn.endWith(str, "Trainer")}>
+    Java is there will//will be shown in the browser
+</c:if>
+
+{fn:toLowerCase(str)}//gives lower
+__________________________________________________________________________________________
+**servlet filter
+we have a, b, c filter 
+for a, b we need log fille
+b,c transactions
+then you need to code in these 3 filters
+
+add filters f1 used for log
+f2 for transactions 
+f3 securities
+
+filter chaining f1 to f3
+web.xml will handle filters
+create class extends serveltFitler
+init 
+doFilter(req, res)//intercept requests
+destroy()
+
+filterConfig
+__________________________________________________________________________________________
+login using servlet & JSP
+using cookie is not safe for login as client can play with it
+session is better as it is only availabe in server
+for logout session.removeAttribute("uname")
+
+stop the back page remove caching by meta tags
