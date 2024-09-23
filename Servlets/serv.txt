@@ -894,3 +894,122 @@ public class Logout extends HttpServlet {
 </filter-mapping>
 
 </web-app>
+
+__________________________________________________________________________________________
+**connecting jsp, jdbc, mysql login page
+
+Login.java
+package com.john;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class Login
+ */
+@WebServlet("/Login")
+public class Login extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Login() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 String uname= request.getParameter("uname");
+		 String upassword=request.getParameter("upassword");
+		 LoginDao dao = new LoginDao();
+		
+		 
+		 
+		 if(dao.check(uname, upassword)){
+			 HttpSession session = request.getSession();
+			 session.setAttribute("username", uname);
+			 session.setAttribute(upassword, upassword);
+			 response.sendRedirect("Welcome.jsp");
+		 }else {
+			 response.sendRedirect("login.jsp");
+		 }
+	}
+
+}
+
+LoginDao.java
+package com.john;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class LoginDao {
+    
+    // Method to check user credentials
+    public boolean check(String uname, String upassword) {
+        String url = "jdbc:mysql://localhost:3306/john?useSSL=false"; // disable SSL if not used
+        String username = "root";
+        String password = "rootsql";
+        String sql = "SELECT * FROM login WHERE uname = ? AND upassword = ?";
+        
+        Connection con = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        
+        try {
+            // Load the MySQL driver (use com.mysql.cj.jdbc.Driver for newer versions)
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            
+            // Establish a connection
+            con = DriverManager.getConnection(url, username, password);
+            
+            // Prepare the SQL statement
+            st = con.prepareStatement(sql);
+            st.setString(1, uname);
+            st.setString(2, upassword);
+            
+            // Execute the query
+            rs = st.executeQuery();
+            
+            // If a record is found, return true (valid login)
+            if (rs.next()) {
+                return true;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close the resources to prevent memory leaks
+            try {
+                if (rs != null) rs.close();
+                if (st != null) st.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        // Return false if credentials are invalid
+        return false;
+    }
+}
+
+
